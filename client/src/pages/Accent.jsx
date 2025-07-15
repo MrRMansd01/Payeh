@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api'; // <-- اصلاح شد
 import Footer from '../components/Footer';
 import './Accent.css';
-import api from '../api';
-
 
 const Accent = () => {
     const navigate = useNavigate();
@@ -26,7 +24,8 @@ const Accent = () => {
             if (!token) return;
 
             try {
-                    const response = await api.get('/profile/me', ...);
+                // --- اصلاح شد: استفاده از api به جای آدرس کامل ---
+                const response = await api.get('/profile/me', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 setUserInfo(response.data);
@@ -40,23 +39,19 @@ const Accent = () => {
         fetchProfile();
     }, [getAuthToken]);
 
-    // **تابع جدید برای مدیریت خروج کاربر**
     const handleLogout = async () => {
         const token = getAuthToken();
         if (!token) return;
 
         try {
-            // ۱. به بک‌اند اطلاع می‌دهیم تا سشن را در سوپربیس باطل کند
-            const response = await api.get('/profile/me', ...);
+            // --- اصلاح شد: استفاده از api به جای آدرس کامل ---
+            await api.post('/auth/logout', {}, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
         } catch (error) {
             console.error("Logout error:", error);
-            // در هر صورت، کاربر را از سمت کلاینت خارج می‌کنیم
         } finally {
-            // ۲. سشن را از حافظه مرورگر پاک می‌کنیم
             localStorage.removeItem('supabaseSession');
-            // ۳. کاربر را به صفحه ورود هدایت می‌کنیم
             navigate('/join');
         }
     };
@@ -83,12 +78,11 @@ const Accent = () => {
                 ) : (
                     <p>Could not load profile information.</p>
                 )}
-                
+
                 <div className="options-section">
                     <div className="option-item" onClick={() => navigate('/my-account')}><span>My Account</span><span>{'>'}</span></div>
                     <div className="option-item" onClick={() => navigate('/saved-beneficiary')}><span>Gems and Point</span><span>{'>'}</span></div>
                     <div className="option-item"><span>Notifications</span><input type="checkbox" className="toggle-switch"/></div>
-                    {/* **اتصال تابع خروج به دکمه** */}
                     <div className="option-item red" onClick={handleLogout}>
                         <span>Logout</span>
                         <span>{'>'}</span>
