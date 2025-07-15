@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api'; // <-- اصلاح شد
 import { useSwipeable } from 'react-swipeable';
 import Footer from '../components/Footer';
 import './Home.css';
@@ -22,8 +22,7 @@ const TodoItem = ({ task, onComplete }) => {
     const date = new Date(dateString + 'T00:00:00');
     return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
   };
-  
-  // **اصلاح اصلی**: تابع getTaskColor اینجا هم اضافه شد
+
   const getTaskColor = (color) => {
     switch (color) {
       case '1': return '#2BBA90'; // Green
@@ -39,7 +38,6 @@ const TodoItem = ({ task, onComplete }) => {
         <span>✓ Completed</span>
       </div>
       <div className={`todo-item-card ${task.is_completed ? 'completed' : ''}`}>
-        {/* **اصلاح اصلی**: نوار رنگی اینجا اضافه شد */}
         <div className="task-color-indicator" style={{ backgroundColor: getTaskColor(task.color) }}></div>
         <div className="task-details">
           <p className="task-title">{task.title}</p>
@@ -73,7 +71,8 @@ const Home = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get('http://localhost:3001/api/tasks', {
+        // --- اصلاح شد: استفاده از api به جای آدرس کامل ---
+        const response = await api.get('/tasks', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         setTasks(response.data);
@@ -84,7 +83,7 @@ const Home = () => {
       }
     };
     fetchTasks();
-  }, [getAuthToken, navigate]);
+  }, [getAuthToken]);
 
   const handleCompleteTask = async (taskId) => {
     const token = getAuthToken();
@@ -98,7 +97,8 @@ const Home = () => {
     );
 
     try {
-        await axios.patch(`http://localhost:3001/api/tasks/${taskId}/complete`, {}, {
+        // --- اصلاح شد: استفاده از api به جای آدرس کامل ---
+        await api.patch(`/tasks/${taskId}/complete`, {}, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
     } catch (error) {
@@ -119,7 +119,7 @@ const Home = () => {
               {loading ? (
                 <p className="loading-message">Loading tasks...</p>
               ) : tasks.length > 0 ? (
-                tasks.map(task => 
+                tasks.map(task =>
                   <TodoItem key={task.id} task={task} onComplete={handleCompleteTask} />
                 )
               ) : (
