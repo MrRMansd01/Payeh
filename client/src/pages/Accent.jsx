@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../components/Footer';
 import './Accent.css';
+import api from '../api';
+
 
 const Accent = () => {
     const navigate = useNavigate();
@@ -24,7 +26,7 @@ const Accent = () => {
             if (!token) return;
 
             try {
-                const response = await axios.get('http://localhost:3001/api/profile/me', {
+                    const response = await api.get('/profile/me', ...);
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 setUserInfo(response.data);
@@ -45,7 +47,7 @@ const Accent = () => {
 
         try {
             // ۱. به بک‌اند اطلاع می‌دهیم تا سشن را در سوپربیس باطل کند
-            await axios.post('http://localhost:3001/api/auth/logout', {}, {
+            const response = await api.get('/profile/me', ...);
                 headers: { 'Authorization': `Bearer ${token}` }
             });
         } catch (error) {
