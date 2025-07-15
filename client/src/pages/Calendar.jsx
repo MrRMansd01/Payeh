@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api from '../api'; // <-- اصلاح شد
 import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import Footer from '../components/Footer';
@@ -96,7 +96,6 @@ const Calendar = () => {
     const navigate = useNavigate();
     const dateInputRef = useRef(null);
 
-    // **اصلاح ۱:** تابع getAuthToken را با هوک useCallback بهینه می‌کنیم
     const getAuthToken = useCallback(() => {
         const sessionDataString = localStorage.getItem('supabaseSession');
         if (!sessionDataString) {
@@ -105,15 +104,15 @@ const Calendar = () => {
         }
         return JSON.parse(sessionDataString).access_token;
     }, [navigate]);
-    
-    // **اصلاح ۲:** تابع fetchTasksByDate را نیز با useCallback بهینه می‌کنیم
+
     const fetchTasksByDate = useCallback(async (date) => {
         const token = getAuthToken();
         if (!token) return;
-        
+
         const dateStr = toYYYYMMDD(date);
         try {
-            const response = await axios.get(`http://localhost:3001/api/tasks`, {
+            // --- اصلاح شد: استفاده از api ---
+            const response = await api.get(`/tasks`, {
                 headers: { 'Authorization': `Bearer ${token}` },
                 params: { date: dateStr }
             });
@@ -121,20 +120,19 @@ const Calendar = () => {
         } catch (error) {
             console.error("Error fetching tasks:", error);
         }
-    }, [getAuthToken]); // <-- وابستگی آن را مشخص می‌کنیم
+    }, [getAuthToken]);
 
-    // **اصلاح ۳:** حالا این useEffect بدون ایجاد حلقه بی‌نهایت کار می‌کند
     useEffect(() => {
         fetchTasksByDate(selectedDate);
-    }, [selectedDate, fetchTasksByDate]); 
+    }, [selectedDate, fetchTasksByDate]);
 
-    // تابع برای اضافه کردن تسک
     const handleAddTask = async (newTaskData) => {
         const token = getAuthToken();
         if (!token) return;
 
         try {
-            const response = await axios.post('http://localhost:3001/api/tasks', newTaskData, {
+            // --- اصلاح شد: استفاده از api ---
+            const response = await api.post('/tasks', newTaskData, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setTasks(prevTasks => [...prevTasks, response.data]);
@@ -144,13 +142,13 @@ const Calendar = () => {
         }
     };
 
-    // تابع برای تکمیل کردن تسک
     const handleCompleteTask = async (taskId) => {
         const token = getAuthToken();
         if (!token) return;
 
         try {
-            const response = await axios.patch(`http://localhost:3001/api/tasks/${taskId}/complete`, {}, {
+            // --- اصلاح شد: استفاده از api ---
+            const response = await api.patch(`/tasks/${taskId}/complete`, {}, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setTasks(tasks.map(t => t.id === taskId ? response.data : t));
@@ -159,13 +157,13 @@ const Calendar = () => {
         }
     };
 
-    // تابع برای حذف تسک
     const handleDeleteTask = async (taskId) => {
         const token = getAuthToken();
         if (!token) return;
 
         try {
-            await axios.delete(`http://localhost:3001/api/tasks/${taskId}`, {
+            // --- اصلاح شد: استفاده از api ---
+            await api.delete(`/tasks/${taskId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setTasks(tasks.filter(t => t.id !== taskId));
