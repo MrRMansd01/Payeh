@@ -1,4 +1,4 @@
-# Spooder Web - Chat Application
+# Payeh - Chat Application
 
 This project is a full-stack web chat application built with React for the client and Node.js/Express for the server. It allows users to register, log in, join chat rooms, and communicate with others.
 
@@ -37,13 +37,13 @@ You will also need a **Supabase** project for database management and authentica
 
 1.  **Clone the project:**
     ```bash
-    git clone https://github.com/MrRMansd01/spooder_web.git
-    cd spooder_web
+    git clone https://github.com/MrRMansd01/Payeh.git
+    cd Payeh
     ```
 
 2.  **Install server dependencies:**
     ```bash
-    cd server
+    cd api
     npm install
     ```
 
@@ -54,20 +54,20 @@ You will also need a **Supabase** project for database management and authentica
     ```
 
 4.  **Configure Supabase:**
-    - Create a `.env` file in both the `server` and `client` directories.
+    - Create a `.env` file in both the `api` and `client` directories.
     - Add your Supabase project credentials to these files:
       ```
       SUPABASE_URL=your_supabase_url
       SUPABASE_KEY=your_supabase_anon_key
       ```
-    - You will need to use these variables in the `supabaseClient.js` files in both the client and server.
+    - You will need to use these variables in the `supabaseClient.js` files in both the client and api.
 
 ## ▶️ Usage
 
 To run the project, you need to run the server and client simultaneously.
 
 1.  **Run the server:**
-    - In a terminal, navigate to the `server` directory and run the following command:
+    - In a terminal, navigate to the `api` directory and run the following command:
     ```bash
     npm start
     ```
@@ -83,7 +83,7 @@ To run the project, you need to run the server and client simultaneously.
 ## 📂 Project Structure
 
 ```
-spooder_web/
+Payeh/
 ├── client/         # Frontend code (React)
 │   ├── public/
 │   ├── src/
@@ -93,9 +93,9 @@ spooder_web/
 │   │   └── index.js
 │   └── package.json
 │
-├── server/         # Backend code (Node.js/Express)
+├── api/         # Backend code (Node.js/Express)
 │   ├── routes/     # API routes
-│   ├── server.js   # Main server file
+│   ├── index.js   # Main server file
 │   └── package.json
 │
 └── README.md
