@@ -159,8 +159,13 @@ const ChatHome = () => {
                 <div className="channel-list">
                     {loading ? <p>Loading channels...</p> : 
                     filteredChannels.map(channel => (
-                        <div key={channel.id} className="channel-item" onClick={() => navigate(`/chat/${channel.id}`)}>
-                            <img src={channel.imageUrl || `https://placehold.co/50x50/7B66FF/FFFFFF?text=${channel.name.substring(0,2)}`} alt={channel.name} className="channel-avatar" />
+                        <div key={channel.id} className="channel-item" onClick={() => navigate(`/chat/${channel.id}`, { 
+                            state: { 
+                                channelName: channel.name, 
+                                channelImage: channel.image_url 
+                            } 
+                        })}>
+                            <img src={channel.image_url || `https://placehold.co/50x50/7B66FF/FFFFFF?text=${channel.name.substring(0,2)}`} alt={channel.name} className="channel-avatar" />
                             <p className="channel-name">{channel.name}</p>
                         </div>
                     ))}
