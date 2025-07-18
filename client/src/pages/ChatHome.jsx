@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import api from '../api'; // <-- به جای axios، کلاینت متمرکز را وارد کنید
+import api from '../api'; 
 import Footer from '../components/Footer';
 import './ChatHome.css';
 
-// کامپوننت مودال افزودن کانال (با قابلیت‌های جدید)
 const AddChannelModal = ({ onClose, onAddChannel }) => {
     const [channelName, setChannelName] = useState('');
     const [imageUrl, setImageUrl] = useState('');
@@ -22,13 +21,11 @@ const AddChannelModal = ({ onClose, onAddChannel }) => {
         return JSON.parse(sessionDataString).access_token;
     }, [navigate]);
 
-    // دریافت لیست کاربران از API جدید
     useEffect(() => {
         const fetchUsers = async () => {
             const token = getAuthToken();
             if (!token) return;
             try {
-                // پورت به 3001 تغییر کرد
                 const response = await axios.get('http://localhost:3001/api/channels/users', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
@@ -92,7 +89,6 @@ const AddChannelModal = ({ onClose, onAddChannel }) => {
     );
 };
 
-// کامپوننت اصلی صفحه
 const ChatHome = () => {
     const navigate = useNavigate();
     const [allChannels, setAllChannels] = useState([]);
@@ -104,13 +100,10 @@ const ChatHome = () => {
     const fetchChannels = useCallback(async () => {
         setLoading(true);
         try {
-            // دیگر نیازی به ارسال دستی توکن نیست. رهگیر این کار را انجام می‌دهد.
             const response = await api.get('/channels');
             setAllChannels(response.data);
             setFilteredChannels(response.data);
         } catch (error) {
-            // رهگیر خطای 401 را به صورت خودکار مدیریت و کاربر را خارج می‌کند.
-            // فقط خطاهای دیگر را در صورت نیاز لاگ می‌کنیم.
             if (error.response?.status !== 401) {
                 console.error("Error fetching channels:", error);
             }
@@ -123,7 +116,6 @@ const ChatHome = () => {
         fetchChannels();
     }, [fetchChannels]);
 
-    // منطق جستجو
     useEffect(() => {
         const results = allChannels.filter(channel =>
             channel.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -134,13 +126,23 @@ const ChatHome = () => {
     const handleAddChannel = async (newChannelData) => {
         try {
             await api.post('/channels', newChannelData);
-            // پس از ایجاد موفق، لیست کانال‌ها را دوباره بارگذاری می‌کنیم
             fetchChannels();
         } catch (error) {
             if (error.response?.status !== 401) {
                 console.error("Error creating channel:", error);
             }
         }
+    };
+
+    const handleChannelClick = (channel) => {
+        // --- اصلاح اصلی اینجاست ---
+        // اطلاعات نام و عکس کانال را در state به مسیر جدید پاس می‌دهیم
+        navigate(`/chat/${channel.id}`, { 
+            state: { 
+                channelName: channel.name, 
+                channelImage: channel.imageUrl 
+            } 
+        });
     };
 
     return (
@@ -159,13 +161,10 @@ const ChatHome = () => {
                 <div className="channel-list">
                     {loading ? <p>Loading channels...</p> : 
                     filteredChannels.map(channel => (
-                        <div key={channel.id} className="channel-item" onClick={() => navigate(`/chat/${channel.id}`, { 
-                            state: { 
-                                channelName: channel.name, 
-                                channelImage: channel.image_url 
-                            } 
-                        })}>
-                            <img src={channel.image_url || `https://placehold.co/50x50/7B66FF/FFFFFF?text=${channel.name.substring(0,2)}`} alt={channel.name} className="channel-avatar" />
+                        // --- اصلاح اصلی اینجاست ---
+                        // از تابع جدید برای کلیک استفاده می‌کنیم
+                        <div key={channel.id} className="channel-item" onClick={() => handleChannelClick(channel)}>
+                            <img src={channel.imageUrl || `https://placehold.co/50x50/7B66FF/FFFFFF?text=${channel.name.substring(0,2)}`} alt={channel.name} className="channel-avatar" />
                             <p className="channel-name">{channel.name}</p>
                         </div>
                     ))}
