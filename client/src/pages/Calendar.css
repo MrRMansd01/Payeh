@@ -4,7 +4,7 @@
   flex-direction: column;
   flex-grow: 1;
   overflow: hidden;
-  margin-top: 50px;
+  margin-top: 0px;
   padding: 20px 16px 80px 16px;
   box-sizing: border-box;
 }
