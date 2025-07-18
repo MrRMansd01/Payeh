@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
 import api from '../api';
 import './ChatRoom.css';
@@ -35,21 +35,52 @@ const AttachmentIcon = () => (
 const ChatRoom = () => {
     const { channelId } = useParams();
     const navigate = useNavigate();
-    const location = useLocation();
     const { user: currentUser } = useAuth();
-
-    const channelName = location.state?.channelName || 'Chat Room';
-    const channelImage = location.state?.channelImage;
 
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [loading, setLoading] = useState(true);
+    const [channelInfo, setChannelInfo] = useState({
+        name: 'Chat Room',
+        image_url: null
+    });
     const messagesEndRef = useRef(null);
     const fileInputRef = useRef(null);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
+
+    // دریافت اطلاعات کانال از Supabase
+    useEffect(() => {
+        const fetchChannelInfo = async () => {
+            try {
+                const { data: channel, error } = await supabase
+                    .from('channels')
+                    .select('name, image_url')
+                    .eq('id', channelId)
+                    .single();
+
+                if (error) {
+                    console.error('Error fetching channel info:', error);
+                    return;
+                }
+
+                if (channel) {
+                    setChannelInfo({
+                        name: channel.name,
+                        image_url: channel.image_url
+                    });
+                }
+            } catch (error) {
+                console.error('Error in fetchChannelInfo:', error);
+            }
+        };
+
+        if (channelId) {
+            fetchChannelInfo();
+        }
+    }, [channelId]);
 
     useEffect(() => {
         const fetchMessages = async () => {
@@ -122,11 +153,11 @@ const ChatRoom = () => {
             <header className="chat-room-header">
                 <button onClick={() => navigate(-1)} className="back-button">←</button>
                 <img 
-                    src={channelImage || `https://placehold.co/40x40/7B66FF/FFFFFF?text=${channelName.substring(0,2)}`} 
+                    src={channelInfo.image_url || `https://placehold.co/40x40/7B66FF/FFFFFF?text=${channelInfo.name.substring(0,2)}`} 
                     alt="channel avatar" 
                     className="header-chat-avatar"
                 />
-                <h3>{channelName}</h3>
+                <h3>{channelInfo.name}</h3>
             </header>
 
             <main className="message-list">
