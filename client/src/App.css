@@ -93,10 +93,10 @@ body {
   
 body, html, #root {
   width: 100%;
-    height: 108%;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  }
+  height: 100%; /* --- اصلاح شد: از 108% به 100% تغییر کرد --- */
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
   
   .auth-container {
     display: flex;
