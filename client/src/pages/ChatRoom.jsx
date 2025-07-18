@@ -57,7 +57,7 @@ const ChatRoom = () => {
             try {
                 const { data: channel, error } = await supabase
                     .from('channels')
-                    .select('name, image_url')
+                    .select('name, imageUrl') // *** اصلاح شد: خواندن ستون صحیح
                     .eq('id', channelId)
                     .single();
 
@@ -69,7 +69,7 @@ const ChatRoom = () => {
                 if (channel) {
                     setChannelInfo({
                         name: channel.name,
-                        image_url: channel.image_url
+                        image_url: channel.imageUrl // *** اصلاح شد: استفاده از پراپرتی صحیح
                     });
                 }
             } catch (error) {
