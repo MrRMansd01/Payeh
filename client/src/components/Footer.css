@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    z-index: 10;
+    z-index: 1001; /* بالاتر از محتوا و FAB */
   }
   
   .nav-item {
@@ -23,14 +23,22 @@
     color: #888;
     font-size: 12px;
     transition: color 0.3s;
+    flex: 1; /* برای توزیع یکنواخت فضا */
+    padding: 4px 0;
   }
   
   .nav-item.active {
     color: #00664F; /* رنگ آیتم فعال */
+  }
+
+  .nav-item.active .nav-label {
     font-weight: bold;
   }
   
   .nav-item:hover {
     color: #004d3a;
   }
-  
+
+  .nav-icon {
+    margin-bottom: 4px;
+  }
