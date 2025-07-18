@@ -5,7 +5,8 @@
   flex-grow: 1;
   overflow: hidden;
   margin-top: 50px;
-  padding: 20px 16px 0 16px;
+  padding: 20px 16px 80px 16px;
+  box-sizing: border-box;
 }
 
 .calendar-header {
