@@ -1,38 +1,17 @@
-/* --- General Page Container (from App.css for consistency) --- */
-.page-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100%;
-  box-sizing: border-box;
-}
+/* client/src/pages/Home.css (نسخه اصلاح شده) */
 
-/* --- Home Page Specific Layout --- */
-.home-specific-layout {
+.home-layout {
   position: relative;
   width: 100%;
   flex-grow: 1;
   overflow: hidden;
   background-color: #00664F; 
+  padding-bottom: 60px; /* فاصله برای فوتر */
 }
 
-/* --- Hero Section (Top visual element) --- */
-.hero-section {
+.home-main-content {
   position: absolute;
-  top: -80px; 
-  left: 0;
-  width: 100%;
-  height: 400px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: 2;
-}
-
-/* --- Main Content Area --- */
-.main-content-container {
-  position: absolute;
-  top: 240px; 
+  top: 120px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -40,52 +19,45 @@
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
   z-index: 3;
-  padding: 10px 10px 80px 10px; /* --- اصلاح شد: فاصله 80px برای فوتر اضافه شد --- */
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box; /* برای محاسبه صحیح padding */
+  box-sizing: border-box;
 }
 
-/* --- To-Do List Card --- */
 .todo-list-card {
-  width: 93%;
-  max-width: 1660px;
-  height: calc(100% - 70px); 
+  width: 100%;
+  height: 100%; 
   background-color: #00664F;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   padding: 15px;
+  box-sizing: border-box;
 }
 
 .todo-header {
-  display: flex;
-  align-items: center;
   padding: 10px 5px 20px 5px;
 }
 
 .todo-header h1 {
   margin: 0;
   color: #FFFFFF;
-  font-size: 2.2rem;
-  font-weight: bold;
+  font-size: 2rem;
 }
 
 .todo-list {
   flex-grow: 1;
   overflow-y: auto;
-  padding-right: 5px; 
 }
 
-/* --- To-Do Item Styles (with Swipe and Color Indicator) --- */
 .todo-item-wrapper {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 12px;
-  touch-action: pan-y;
 }
 
 .swipe-background {
@@ -99,7 +71,6 @@
   display: flex;
   align-items: center;
   padding-left: 20px;
-  font-weight: bold;
 }
 
 .todo-item-card {
@@ -117,25 +88,22 @@
   height: 50px;
   border-radius: 3px;
   margin-right: 20px;
-  flex-shrink: 0;
+}
+
+.todo-item-card.completed {
+  opacity: 0.6;
+}
+.todo-item-card.completed .task-title {
+  text-decoration: line-through;
 }
 
 .task-details {
   flex-grow: 1;
 }
 
-.todo-item-card.completed {
-  opacity: 0.6;
-}
-
 .task-title {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin: 0 0 10px 0;
-}
-
-.todo-item-card.completed .task-title {
-  text-decoration: line-through;
+  font-size: 1.1rem;
+  margin: 0 0 8px 0;
 }
 
 .task-meta {
@@ -144,20 +112,13 @@
   align-items: center;
 }
 
-.task-date {
+.task-date, .task-time {
   font-size: 0.9rem;
   color: #666;
-}
-
-.task-time {
-  font-size: 1.1rem; 
-  font-weight: 500;
-  color: #4A3BF7;
 }
 
 .loading-message, .empty-message {
   text-align: center;
   color: white;
   margin-top: 40px;
-  font-size: 1.1rem;
 }

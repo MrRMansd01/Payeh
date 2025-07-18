@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
 import api from '../api';
 import './ChatRoom.css';
 
-// کلاینت سوپابیس برای قابلیت‌های لحظه‌ای (Real-time) و آپلود فایل
 const supabaseUrl = 'https://lholzspyazziknxqopmi.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxob2x6c3B5YXp6aWtueHFvcG1pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwMjc0MTAsImV4cCI6MjA1NzYwMzQxMH0.uku06OF-WapBhuV-A_rJBXu3x24CKKkSTM0SnmPIOOE';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// هوک برای دریافت اطلاعات کاربر فعلی
 const useAuth = () => {
     const sessionData = localStorage.getItem('supabaseSession');
     if (!sessionData) return { user: null };
@@ -22,11 +20,9 @@ const useAuth = () => {
     }
 };
 
-// آیکون‌های SVG
 const SendIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 2L11 13" />
-        <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+        <path d="M22 2L11 13" /><path d="M22 2L15 22L11 13L2 9L22 2Z" />
     </svg>
 );
 
@@ -36,11 +32,14 @@ const AttachmentIcon = () => (
     </svg>
 );
 
-
 const ChatRoom = () => {
     const { channelId } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const { user: currentUser } = useAuth();
+
+    const channelName = location.state?.channelName || 'Chat Room';
+    const channelImage = location.state?.channelImage;
 
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
@@ -59,9 +58,7 @@ const ChatRoom = () => {
                 const response = await api.get(`/messages/${channelId}`);
                 setMessages(response.data);
             } catch (error) {
-                if (error.response?.status !== 401) {
-                    console.error("Failed to fetch messages.", error);
-                }
+                if (error.response?.status !== 401) console.error("Failed to fetch messages.", error);
             } finally {
                 setLoading(false);
             }
@@ -74,83 +71,62 @@ const ChatRoom = () => {
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' },
                 (payload) => {
                     setMessages((prevMessages) => {
-                        if (prevMessages.some(msg => msg.id === payload.new.id)) {
-                            return prevMessages;
-                        }
-                        // برای پیام‌های دریافتی از دیگران، نیاز به واکشی اطلاعات پروفایل داریم
+                        if (prevMessages.some(msg => msg.id === payload.new.id)) return prevMessages;
+                        
                         const fetchSenderProfile = async () => {
-                            const { data: profile } = await supabase
-                                .from('profiles')
-                                .select('id, username, avatar_url')
-                                .eq('id', payload.new.sender_id)
-                                .single();
-                            
+                            const { data: profile } = await supabase.from('profiles').select('id, username, avatar_url').eq('id', payload.new.sender_id).single();
                             const messageWithProfile = { ...payload.new, sender_id: profile };
                             setMessages(prev => [...prev, messageWithProfile]);
                         };
                         
-                        // فقط اگر پیام از کاربر دیگری بود، پروفایل را واکشی کن
-                        if (payload.new.sender_id !== currentUser?.id) {
-                            fetchSenderProfile();
-                        }
+                        if (payload.new.sender_id !== currentUser?.id) fetchSenderProfile();
                     });
                 }
             )
             .subscribe();
 
-        return () => {
-            supabase.removeChannel(subscription);
-        };
+        return () => { supabase.removeChannel(subscription); };
     }, [channelId, currentUser?.id]);
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if (!newMessage.trim() || !currentUser) return;
-
         try {
             const response = await api.post(`/messages/${channelId}`, { content: newMessage });
-            // به‌روزرسانی لحظه‌ای UI با پاسخی که از سرور می‌آید
             setMessages(prevMessages => [...prevMessages, response.data]);
             setNewMessage('');
         } catch (error) {
-            if (error.response?.status !== 401) {
-                console.error("Error sending message:", error);
-            }
+            if (error.response?.status !== 401) console.error("Error sending message:", error);
         }
     };
 
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];
         if (!file || !currentUser) return;
-
         const fileName = `${currentUser.id}/${Date.now()}`;
         try {
-            const { error: uploadError } = await supabase.storage
-                .from('spooderimage')
-                .upload(fileName, file);
-
+            const { error: uploadError } = await supabase.storage.from('spooderimage').upload(fileName, file);
             if (uploadError) throw uploadError;
-
-            const { data: { publicUrl } } = supabase.storage
-                .from('spooderimage')
-                .getPublicUrl(fileName);
-
+            const { data: { publicUrl } } = supabase.storage.from('spooderimage').getPublicUrl(fileName);
             const response = await api.post(`/messages/${channelId}`, { imageUrl: publicUrl });
-            // به‌روزرسانی لحظه‌ای UI با پیام حاوی تصویر
             setMessages(prevMessages => [...prevMessages, response.data]);
-
         } catch (error) {
             console.error("Error uploading image or sending message:", error);
         }
     };
 
-    if (loading) return <div className="page-container">در حال بارگذاری پیام‌ها...</div>;
+    if (loading) return <div className="page-container"><p>در حال بارگذاری پیام‌ها...</p></div>;
 
     return (
-        <div className="chat-room-container">
+        <div className="chat-room-layout">
             <header className="chat-room-header">
                 <button onClick={() => navigate(-1)} className="back-button">←</button>
-                <h3>چت‌روم</h3>
+                <img 
+                    src={channelImage || `https://placehold.co/40x40/7B66FF/FFFFFF?text=${channelName.substring(0,2)}`} 
+                    alt="channel avatar" 
+                    className="header-chat-avatar"
+                />
+                <h3>{channelName}</h3>
             </header>
 
             <main className="message-list">
@@ -185,7 +161,6 @@ const ChatRoom = () => {
 const MessageBubble = ({ message, isCurrentUser }) => {
     const sender = message.sender_id;
     if (!sender) return null;
-
     const senderName = isCurrentUser ? 'شما' : sender.username;
     const avatarUrl = sender.avatar_url || `https://placehold.co/30x30/cccccc/FFFFFF?text=${senderName.charAt(0).toUpperCase()}`;
 
@@ -195,11 +170,7 @@ const MessageBubble = ({ message, isCurrentUser }) => {
             <div className="message-content">
                 {!isCurrentUser && <div className="sender-name">{senderName}</div>}
                 <div className="message-bubble">
-                    {message.imageUrl ? (
-                        <img src={message.imageUrl} alt="sent content" className="message-image" />
-                    ) : (
-                        message.content
-                    )}
+                    {message.imageUrl ? (<img src={message.imageUrl} alt="sent content" className="message-image" />) : (message.content)}
                 </div>
             </div>
             {isCurrentUser && <img src={avatarUrl} alt="avatar" className="chat-avatar" />}

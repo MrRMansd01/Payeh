@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api'; // <-- اصلاح شد
+import api from '../api';
 import Footer from '../components/Footer';
 import './Accent.css';
 
@@ -24,7 +24,6 @@ const Accent = () => {
             if (!token) return;
 
             try {
-                // --- اصلاح شد: استفاده از api به جای آدرس کامل ---
                 const response = await api.get('/profile/me', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
@@ -44,7 +43,6 @@ const Accent = () => {
         if (!token) return;
 
         try {
-            // --- اصلاح شد: استفاده از api به جای آدرس کامل ---
             await api.post('/auth/logout', {}, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -62,7 +60,7 @@ const Accent = () => {
 
     return (
         <div className="page-container">
-            <div className="accent-content">
+            <div className="content-wrap">
                 <header className="accent-header">
                     <h1>Profile</h1>
                 </header>

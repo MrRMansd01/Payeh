@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api'; // <-- اصلاح شد
+import api from '../api';
 import { useSwipeable } from 'react-swipeable';
 import Footer from '../components/Footer';
 import './Home.css';
 
-// کامپوننت برای نمایش هر آیتم در لیست وظایف
 const TodoItem = ({ task, onComplete }) => {
   const handlers = useSwipeable({
     onSwipedRight: () => {
@@ -28,7 +27,7 @@ const TodoItem = ({ task, onComplete }) => {
       case '1': return '#2BBA90'; // Green
       case '2': return '#ECB800'; // Yellow
       case '3': return '#EC0000'; // Red
-      default: return '#888'; // A default color
+      default: return '#888';
     }
   };
 
@@ -71,7 +70,6 @@ const Home = () => {
       if (!token) return;
 
       try {
-        // --- اصلاح شد: استفاده از api به جای آدرس کامل ---
         const response = await api.get('/tasks', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -97,7 +95,6 @@ const Home = () => {
     );
 
     try {
-        // --- اصلاح شد: استفاده از api به جای آدرس کامل ---
         await api.patch(`/tasks/${taskId}/complete`, {}, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -110,9 +107,8 @@ const Home = () => {
 
   return (
     <div className="page-container">
-      <div className="home-specific-layout">
-        <div className="hero-section"></div>
-        <div className="main-content-container">
+      <div className="home-layout">
+        <div className="home-main-content">
           <div className="todo-list-card">
             <header className="todo-header"><h1>To-Do</h1></header>
             <div className="todo-list">
