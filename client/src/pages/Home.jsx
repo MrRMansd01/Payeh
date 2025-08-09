@@ -5,11 +5,11 @@ import { useSwipeable } from 'react-swipeable';
 import Footer from '../components/Footer';
 import './Home.css';
 
-// --- کامپوننت جدید برای پاپ‌آپ ---
-const CompletionPopup = ({ task, onClose }) => {
+// --- کامپوننت پاپ‌آپ با قابلیت بازخورد ---
+const CompletionPopup = ({ task, onClose, onSubmitFeedback }) => {
+  const [feedback, setFeedback] = useState('');
   if (!task) return null;
 
-  // تابعی برای محاسبه امتیاز بر اساس سختی (رنگ)
   const getPoints = (color) => {
     switch (color) {
       case '1': return 10;
@@ -19,26 +19,42 @@ const CompletionPopup = ({ task, onClose }) => {
     }
   };
 
+  const handleSubmit = () => {
+    onSubmitFeedback(task.id, feedback);
+    onClose();
+  };
+
   return (
     <div className="popup-overlay" onClick={onClose}>
       <div className="popup-card" onClick={(e) => e.stopPropagation()}>
         <h3>Task Completed!</h3>
         <p className="task-title">{task.title}</p>
-        <p className="task-time">Time: {task.time_start || 'N/A'}</p>
         <p className="task-points">+{getPoints(task.color)} Points</p>
-        <button onClick={onClose} className="popup-close-btn">
-          Great!
+        
+        <div className="feedback-form">
+          <label htmlFor="feedback-text">How was this task?</label>
+          <textarea
+            id="feedback-text"
+            placeholder="Share your thoughts..."
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+          ></textarea>
+        </div>
+
+        <button onClick={handleSubmit} className="popup-submit-btn">
+          Submit Feedback
         </button>
       </div>
     </div>
   );
 };
 
+
 const TodoItem = ({ task, onComplete }) => {
   const handlers = useSwipeable({
     onSwipedRight: () => {
       if (!task.is_completed) {
-        onComplete(task); // --- ارسال کل آبجکت تسک ---
+        onComplete(task);
       }
     },
     trackMouse: true,
@@ -82,7 +98,7 @@ const TodoItem = ({ task, onComplete }) => {
 const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [completedTask, setCompletedTask] = useState(null); // --- استیت برای پاپ‌آپ ---
+  const [completedTask, setCompletedTask] = useState(null);
   const navigate = useNavigate();
 
   const getAuthToken = useCallback(() => {
@@ -113,7 +129,7 @@ const Home = () => {
     fetchTasks();
   }, [getAuthToken]);
 
-  const handleCompleteTask = async (taskToComplete) => { // --- دریافت کل آبجکت تسک ---
+  const handleCompleteTask = async (taskToComplete) => {
     const token = getAuthToken();
     if (!token) return;
 
@@ -128,12 +144,27 @@ const Home = () => {
         await api.patch(`/tasks/${taskToComplete.id}/complete`, {}, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        // --- نمایش پاپ‌آپ پس از موفقیت ---
         setCompletedTask(taskToComplete);
     } catch (error) {
         console.error("Error completing task:", error);
         setTasks(originalTasks);
         alert("Failed to update task.");
+    }
+  };
+
+  const handleSubmitFeedback = async (taskId, feedback) => {
+    const token = getAuthToken();
+    if (!token || !feedback.trim()) return;
+
+    try {
+      await api.post(`/tasks/${taskId}/feedback`, 
+        { feedback },
+        { headers: { 'Authorization': `Bearer ${token}` } }
+      );
+      alert("Feedback submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+      alert("Failed to submit feedback.");
     }
   };
 
@@ -158,8 +189,11 @@ const Home = () => {
         </div>
       </div>
       <Footer />
-      {/* --- رندر کردن پاپ‌آپ --- */}
-      <CompletionPopup task={completedTask} onClose={() => setCompletedTask(null)} />
+      <CompletionPopup 
+        task={completedTask} 
+        onClose={() => setCompletedTask(null)}
+        onSubmitFeedback={handleSubmitFeedback}
+      />
     </div>
   );
 };
