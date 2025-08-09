@@ -122,3 +122,75 @@ body, html, #root {
   color: #00664F;
   font-weight: bold;
 }
+
+/* --- استایل‌های جدید برای پاپ‌آپ --- */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.popup-card {
+  background-color: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 350px;
+  text-align: center;
+  animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.popup-card h3 {
+  color: #00664F;
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.popup-card .task-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 10px 0;
+}
+
+.popup-card .task-time {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.popup-card .task-points {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ECB800; /* رنگ طلایی برای امتیاز */
+  margin: 15px 0;
+}
+
+.popup-close-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #00664F;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 15px;
+}
