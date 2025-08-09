@@ -103,5 +103,35 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     }
 });
 
+router.post('/:id/feedback', authMiddleware, async (req, res) => {
+    const taskId = req.params.id;
+    const userId = req.user.id;
+    const { feedback } = req.body;
+
+    if (!feedback || feedback.trim() === '') {
+        return res.status(400).json({ error: 'Feedback cannot be empty.' });
+    }
+
+    try {
+        const { data, error } = await supabase
+            .from('task_feedback')
+            .insert([
+                { 
+                    task_id: taskId, 
+                    user_id: userId, 
+                    feedback: feedback 
+                }
+            ])
+            .select();
+
+        if (error) throw error;
+        
+        res.status(201).json({ message: 'Feedback added successfully.', data });
+
+    } catch (err) {
+        console.error("Error adding feedback:", err.message);
+        res.status(500).send('Server Error');
+    }
+});
 
 module.exports = router;
