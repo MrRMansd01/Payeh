@@ -11,20 +11,49 @@ const formatMinutes = (minutes) => {
     return `${h}h ${m}m`;
 };
 
-// تابع کمکی برای محاسبه اختلاف زمان بین دو رشته 'HH:MM'
-const calculateDurationInMinutes = (timeStart, timeEnd) => {
-    try {
-        if (!timeStart || !timeEnd) return 0;
-        const [startH, startM] = timeStart.split(':').map(Number);
-        const [endH, endM] = timeEnd.split(':').map(Number);
-        const startTimeInMinutes = startH * 60 + startM;
-        const endTimeInMinutes = endH * 60 + endM;
-        if (endTimeInMinutes < startTimeInMinutes) return 0;
-        return endTimeInMinutes - startTimeInMinutes;
-    } catch (e) {
-        console.error("Invalid time format for calculation:", timeStart, timeEnd);
-        return 0;
+// --- تابع هوشمند برای پردازش فرمت‌های مختلف زمان ---
+const parseTimeToMinutes = (timeString) => {
+    if (!timeString) return 0;
+
+    // Handle ISO 8601 format (e.g., "1899-12-30T07:34:16.000Z")
+    if (timeString.includes('T')) {
+        const date = new Date(timeString);
+        return date.getUTCHours() * 60 + date.getUTCMinutes();
     }
+
+    // Handle "h:mm A" format (e.g., "7:49 PM")
+    const pmMatch = timeString.match(/(\d{1,2}):(\d{2})\s*PM/i);
+    if (pmMatch) {
+        let hours = parseInt(pmMatch[1], 10);
+        if (hours !== 12) hours += 12;
+        return hours * 60 + parseInt(pmMatch[2], 10);
+    }
+
+    const amMatch = timeString.match(/(\d{1,2}):(\d{2})\s*AM/i);
+    if (amMatch) {
+        let hours = parseInt(amMatch[1], 10);
+        if (hours === 12) hours = 0; // Midnight case
+        return hours * 60 + parseInt(amMatch[2], 10);
+    }
+
+    // Handle "HH:mm" format (e.g., "16:09")
+    const hhmmMatch = timeString.match(/^(\d{2}):(\d{2})$/);
+    if (hhmmMatch) {
+        return parseInt(hhmmMatch[1], 10) * 60 + parseInt(hhmmMatch[2], 10);
+    }
+
+    console.warn("Unrecognized time format:", timeString);
+    return 0; // Return 0 for unrecognized formats
+};
+
+
+// تابع کمکی برای محاسبه اختلاف زمان
+const calculateDurationInMinutes = (timeStart, timeEnd) => {
+    if (!timeStart || !timeEnd) return 0;
+    const startMinutes = parseTimeToMinutes(timeStart);
+    const endMinutes = parseTimeToMinutes(timeEnd);
+    if (endMinutes < startMinutes) return 0;
+    return endMinutes - startMinutes;
 };
 
 // @route   GET /api/room/data
@@ -32,10 +61,10 @@ const calculateDurationInMinutes = (timeStart, timeEnd) => {
 // @access  Private
 router.get('/data', authMiddleware, async (req, res) => {
     try {
-        // ۱. دریافت تمام تسک‌های تکمیل شده و خواندن ستون color برای امتیاز
+        // ۱. دریافت تمام تسک‌های تکمیل شده
         const { data: completedTasks, error: tasksError } = await supabase
             .from('tasks')
-            .select('user_id, time_start, time_end, color') // به جای score، ستون color را می‌خوانیم
+            .select('user_id, time_start, time_end, color')
             .eq('is_completed', true);
 
         if (tasksError) throw tasksError;
@@ -47,25 +76,24 @@ router.get('/data', authMiddleware, async (req, res) => {
                 userStats[task.user_id] = { totalTime: 0, totalScore: 0 };
             }
             userStats[task.user_id].totalTime += calculateDurationInMinutes(task.time_start, task.time_end);
-            // مقدار ستون color را به عنوان امتیاز در نظر می‌گیریم و به عدد تبدیل می‌کنیم
-            userStats[task.user_id].totalScore += (Number(task.color) || 0);
+            userStats[task.user_id].totalScore += (Number(task.color) || 0) * 10; // امتیاز بر اساس رنگ
         }
 
-        // ۳. دریافت تمام پروفایل‌ها برای گرفتن نام و آواتار
+        // ۳. دریافت تمام پروفایل‌ها
         const { data: profiles, error: profilesError } = await supabase
             .from('profiles')
             .select('id, username, avatar_url');
 
         if (profilesError) throw profilesError;
 
-        // ۴. ادغام اطلاعات پروفایل با آمار محاسبه شده
+        // ۴. ادغام اطلاعات
         const combinedData = profiles.map(profile => ({
             ...profile,
             total_time_minutes: userStats[profile.id]?.totalTime || 0,
-            score: userStats[profile.id]?.totalScore || 0, // نام پراپرتی score باقی می‌ماند تا فرانت‌اند دچار خطا نشود
+            score: userStats[profile.id]?.totalScore || 0,
         }));
 
-        // ۵. ساخت جدول امتیازات بر اساس داده‌های ادغام شده
+        // ۵. ساخت جدول امتیازات
         const timeLeaderboard = [...combinedData]
             .sort((a, b) => b.total_time_minutes - a.total_time_minutes)
             .slice(0, 5)
@@ -86,7 +114,7 @@ router.get('/data', authMiddleware, async (req, res) => {
 
         res.json({
             leaderboard: { time: timeLeaderboard, score: scoreLeaderboard },
-            stats: { completed: 0, pending: 0, totalTime: '0m' }
+            stats: { completed: 0, pending: 0, totalTime: '0m' } // این بخش بعدا می‌تواند کامل شود
         });
 
     } catch (error) {
