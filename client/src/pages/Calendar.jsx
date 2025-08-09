@@ -1,9 +1,39 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import api from '../api'; // <-- اصلاح شد
+import api from '../api'; 
 import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import Footer from '../components/Footer';
 import './Calendar.css';
+
+// --- کامپوننت جدید برای پاپ‌آپ ---
+const CompletionPopup = ({ task, onClose }) => {
+  if (!task) return null;
+
+  // تابعی برای محاسبه امتیاز بر اساس سختی (رنگ)
+  const getPoints = (color) => {
+    switch (color) {
+      case '1': return 10;
+      case '2': return 20;
+      case '3': return 30;
+      default: return 0;
+    }
+  };
+
+  return (
+    <div className="popup-overlay" onClick={onClose}>
+      <div className="popup-card" onClick={(e) => e.stopPropagation()}>
+        <h3>Task Completed!</h3>
+        <p className="task-title">{task.title}</p>
+        <p className="task-time">Time: {task.time_start || 'N/A'}</p>
+        <p className="task-points">+{getPoints(task.color)} Points</p>
+        <button onClick={onClose} className="popup-close-btn">
+          Awesome!
+        </button>
+      </div>
+    </div>
+  );
+};
+
 
 // توابع کمکی
 const addDays = (date, days) => { const r = new Date(date); r.setDate(r.getDate() + days); return r; };
@@ -63,7 +93,7 @@ const AddTaskModal = ({ onClose, onAddTask, selectedDate }) => {
 const CalendarTaskItem = ({ task, onComplete, onDelete }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const handlers = useSwipeable({
-    onSwipedRight: () => !task.is_completed && onComplete(task.id),
+    onSwipedRight: () => !task.is_completed && onComplete(task), // ارسال کل آبجکت تسک
     onSwipedLeft: () => !task.is_completed && setShowDeleteConfirm(true),
     trackMouse: true,
     preventDefaultTouchmoveEvent: true,
@@ -93,6 +123,7 @@ const Calendar = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [tasks, setTasks] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [completedTask, setCompletedTask] = useState(null); // --- استیت برای پاپ‌آپ ---
     const navigate = useNavigate();
     const dateInputRef = useRef(null);
 
@@ -111,7 +142,6 @@ const Calendar = () => {
 
         const dateStr = toYYYYMMDD(date);
         try {
-            // --- اصلاح شد: استفاده از api ---
             const response = await api.get(`/tasks`, {
                 headers: { 'Authorization': `Bearer ${token}` },
                 params: { date: dateStr }
@@ -131,7 +161,6 @@ const Calendar = () => {
         if (!token) return;
 
         try {
-            // --- اصلاح شد: استفاده از api ---
             const response = await api.post('/tasks', newTaskData, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -142,16 +171,17 @@ const Calendar = () => {
         }
     };
 
-    const handleCompleteTask = async (taskId) => {
+    const handleCompleteTask = async (taskToComplete) => {
         const token = getAuthToken();
         if (!token) return;
 
         try {
-            // --- اصلاح شد: استفاده از api ---
-            const response = await api.patch(`/tasks/${taskId}/complete`, {}, {
+            const response = await api.patch(`/tasks/${taskToComplete.id}/complete`, {}, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            setTasks(tasks.map(t => t.id === taskId ? response.data : t));
+            setTasks(tasks.map(t => t.id === taskToComplete.id ? response.data : t));
+            // --- نمایش پاپ‌آپ ---
+            setCompletedTask(taskToComplete);
         } catch (error) {
             console.error("Error completing task:", error);
         }
@@ -162,7 +192,6 @@ const Calendar = () => {
         if (!token) return;
 
         try {
-            // --- اصلاح شد: استفاده از api ---
             await api.delete(`/tasks/${taskId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -205,6 +234,8 @@ const Calendar = () => {
             <button className="fab" onClick={() => setIsModalOpen(true)}>+</button>
             {isModalOpen && <AddTaskModal onClose={() => setIsModalOpen(false)} onAddTask={handleAddTask} selectedDate={selectedDate} />}
             <Footer />
+            {/* --- رندر کردن پاپ‌آپ --- */}
+            <CompletionPopup task={completedTask} onClose={() => setCompletedTask(null)} />
         </div>
     );
 };

@@ -5,11 +5,40 @@ import { useSwipeable } from 'react-swipeable';
 import Footer from '../components/Footer';
 import './Home.css';
 
+// --- کامپوننت جدید برای پاپ‌آپ ---
+const CompletionPopup = ({ task, onClose }) => {
+  if (!task) return null;
+
+  // تابعی برای محاسبه امتیاز بر اساس سختی (رنگ)
+  const getPoints = (color) => {
+    switch (color) {
+      case '1': return 10;
+      case '2': return 20;
+      case '3': return 30;
+      default: return 0;
+    }
+  };
+
+  return (
+    <div className="popup-overlay" onClick={onClose}>
+      <div className="popup-card" onClick={(e) => e.stopPropagation()}>
+        <h3>Task Completed!</h3>
+        <p className="task-title">{task.title}</p>
+        <p className="task-time">Time: {task.time_start || 'N/A'}</p>
+        <p className="task-points">+{getPoints(task.color)} Points</p>
+        <button onClick={onClose} className="popup-close-btn">
+          Great!
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const TodoItem = ({ task, onComplete }) => {
   const handlers = useSwipeable({
     onSwipedRight: () => {
       if (!task.is_completed) {
-        onComplete(task.id);
+        onComplete(task); // --- ارسال کل آبجکت تسک ---
       }
     },
     trackMouse: true,
@@ -53,6 +82,7 @@ const TodoItem = ({ task, onComplete }) => {
 const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [completedTask, setCompletedTask] = useState(null); // --- استیت برای پاپ‌آپ ---
   const navigate = useNavigate();
 
   const getAuthToken = useCallback(() => {
@@ -83,21 +113,23 @@ const Home = () => {
     fetchTasks();
   }, [getAuthToken]);
 
-  const handleCompleteTask = async (taskId) => {
+  const handleCompleteTask = async (taskToComplete) => { // --- دریافت کل آبجکت تسک ---
     const token = getAuthToken();
     if (!token) return;
 
     const originalTasks = tasks;
     setTasks(currentTasks =>
       currentTasks.map(task =>
-        task.id === taskId ? { ...task, is_completed: true } : task
+        task.id === taskToComplete.id ? { ...task, is_completed: true } : task
       )
     );
 
     try {
-        await api.patch(`/tasks/${taskId}/complete`, {}, {
+        await api.patch(`/tasks/${taskToComplete.id}/complete`, {}, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
+        // --- نمایش پاپ‌آپ پس از موفقیت ---
+        setCompletedTask(taskToComplete);
     } catch (error) {
         console.error("Error completing task:", error);
         setTasks(originalTasks);
@@ -126,6 +158,8 @@ const Home = () => {
         </div>
       </div>
       <Footer />
+      {/* --- رندر کردن پاپ‌آپ --- */}
+      <CompletionPopup task={completedTask} onClose={() => setCompletedTask(null)} />
     </div>
   );
 };
