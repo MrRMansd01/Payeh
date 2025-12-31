@@ -105,7 +105,7 @@
     font-size: 1.2rem;
     color: #00664F;
   }
-  .fab {
+.fab {
     margin-bottom: 14px;
     margin-right: 10px;
     position:fixed;
@@ -124,5 +124,12 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     z-index: 20; /* بالاتر از بقیه محتوا */
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .fab:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
+  }
+  .fab:active {
+    transform: scale(0.98);
   }

@@ -80,7 +80,8 @@
   padding: 20px;
   position: relative;
   z-index: 2;
-  transition: transform 0.3s ease;
+  will-change: transform;
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
 
 .task-color-indicator {

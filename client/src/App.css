@@ -50,7 +50,11 @@ body, html, #root {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 1000;
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.fab:hover { transform: scale(1.02); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24); }
+.fab:active { transform: scale(0.98); }
 
 /* استایل‌های فرم لاگین و ثبت‌نام */
 .auth-container {
@@ -145,15 +149,17 @@ body, html, #root {
   width: 90%;
   max-width: 350px;
   text-align: center;
-  animation: slide-in 0.3s ease-out;
+  will-change: transform, opacity;
+  animation: slide-in 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
 }
 
 @keyframes slide-in {
-  from {
-    transform: translateY(30px);
+  0% {
+    transform: translateY(16px);
     opacity: 0;
   }
-  to {
+  100% {
     transform: translateY(0);
     opacity: 1;
   }
@@ -215,15 +221,17 @@ body, html, #root {
   width: 90%;
   max-width: 380px; 
   text-align: center;
-  animation: slide-in 0.3s ease-out;
+  will-change: transform, opacity;
+  animation: slide-in 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
 }
 
 @keyframes slide-in {
-  from {
-    transform: translateY(30px);
+  0% {
+    transform: translateY(16px);
     opacity: 0;
   }
-  to {
+  100% {
     transform: translateY(0);
     opacity: 1;
   }
@@ -281,4 +289,18 @@ body, html, #root {
   cursor: pointer;
   font-size: 1rem;
   margin-top: 10px;
+}
+.popup-card h3 {
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-content,
+  .popup-card,
+  .channel-item,
+  .calendar-task-item,
+  .todo-item-card,
+  .fab {
+    animation: none !important;
+    transition: none !important;
+  }
 }

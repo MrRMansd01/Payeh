@@ -14,18 +14,18 @@
     z-index: 1001; /* بالاتر از محتوا و FAB */
   }
   
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: #888;
-    font-size: 12px;
-    transition: color 0.3s;
-    flex: 1; /* برای توزیع یکنواخت فضا */
-    padding: 4px 0;
-  }
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #888;
+  font-size: 12px;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex: 1; /* برای توزیع یکنواخت فضا */
+  padding: 4px 0;
+}
   
   .nav-item.active {
     color: #00664F; /* رنگ آیتم فعال */
