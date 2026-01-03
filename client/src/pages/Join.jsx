@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import api from '../api'; // برای ارتباط با بک‌اند
+import { supabase } from '../supabaseClient'; // استفاده مستقیم از کلاینت سوپربیس
 
 const Join = () => {
   const [email, setEmail] = useState('');
@@ -15,24 +15,25 @@ const Join = () => {
     setError('');
 
     try {
-      // ارسال درخواست به API لاگین در بک‌اند
-      const response = await api.post('/auth/login', {
+      // لاگین مستقیم با سوپربیس (مدیریت خودکار سشن و توکن)
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      // در صورت موفقیت، سوپربیس یک session شامل توکن برمی‌گرداند
-      // ما این توکن را در مرورگر ذخیره می‌کنیم تا کاربر لاگین بماند
-      localStorage.setItem('supabaseSession', JSON.stringify(response.data.session));
-      
+      if (error) throw error;
+
+      // سشن به صورت خودکار توسط کلاینت سوپربیس مدیریت می‌شود
+      // نیازی به ذخیره دستی در localStorage نیست
+
       // هدایت به صفحه اصلی
       navigate('/home');
 
     } catch (err) {
-      // نمایش خطایی که از سمت سرور می‌آید
-      const errorMessage = err.response?.data?.error || 'Login failed. Please try again.';
+      // نمایش خطا
+      const errorMessage = err.message || 'Login failed. Please try again.';
       setError(errorMessage);
-      console.error('Login error:', err.response || err);
+      console.error('Login error:', err);
     } finally {
       setIsLoading(false);
     }

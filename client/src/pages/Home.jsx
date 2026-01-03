@@ -102,23 +102,16 @@ const Home = () => {
   const navigate = useNavigate();
 
   const getAuthToken = useCallback(() => {
-    const sessionDataString = localStorage.getItem('supabaseSession');
-    if (!sessionDataString) {
-        navigate('/join');
-        return null;
-    }
-    return JSON.parse(sessionDataString).access_token;
-  }, [navigate]);
+    // این تابع دیگر استفاده نمی‌شود چون api.js خودش مدیریت می‌کند
+    // اما برای جلوگیری از شکستن کد در جاهای دیگر که ممکن است صدا زده شود، فعلاً نگه می‌داریم یا ریفکتور می‌کنیم
+    // بهتر است حذف شود و لاجیک فچ کردن ساده شود
+    return true; 
+  }, []);
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const token = getAuthToken();
-      if (!token) return;
-
       try {
-        const response = await api.get('/tasks', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+        const response = await api.get('/tasks');
         setTasks(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -127,12 +120,9 @@ const Home = () => {
       }
     };
     fetchTasks();
-  }, [getAuthToken]);
+  }, []);
 
   const handleCompleteTask = async (taskToComplete) => {
-    const token = getAuthToken();
-    if (!token) return;
-
     const originalTasks = tasks;
     setTasks(currentTasks =>
       currentTasks.map(task =>
@@ -141,9 +131,7 @@ const Home = () => {
     );
 
     try {
-        await api.patch(`/tasks/${taskToComplete.id}/complete`, {}, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
+        await api.patch(`/tasks/${taskToComplete.id}/complete`);
         setCompletedTask(taskToComplete);
     } catch (error) {
         console.error("Error completing task:", error);
@@ -153,14 +141,10 @@ const Home = () => {
   };
 
   const handleSubmitFeedback = async (taskId, feedback) => {
-    const token = getAuthToken();
-    if (!token || !feedback.trim()) return;
+    if (!feedback.trim()) return;
 
     try {
-      await api.post(`/tasks/${taskId}/feedback`, 
-        { feedback },
-        { headers: { 'Authorization': `Bearer ${token}` } }
-      );
+      await api.post(`/tasks/${taskId}/feedback`, { feedback });
       alert("Feedback submitted successfully!");
     } catch (error) {
       console.error("Error submitting feedback:", error);
