@@ -11,7 +11,7 @@ api.interceptors.request.use(
   async (config) => {
     // گرفتن سشن معتبر از کلاینت سوپربیس
     // این متد در صورت نیاز توکن را رفرش می‌کند
-    const { data: { session }, error } = await supabase.auth.getSession();
+    const { data: { session } } = await supabase.auth.getSession();
     
     if (session?.access_token) {
       config.headers.Authorization = `Bearer ${session.access_token}`;

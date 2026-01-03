@@ -16,7 +16,7 @@ const Join = () => {
 
     try {
       // لاگین مستقیم با سوپربیس (مدیریت خودکار سشن و توکن)
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import api from '../api';
 import { useSwipeable } from 'react-swipeable';
 import Footer from '../components/Footer';
@@ -99,14 +98,6 @@ const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [completedTask, setCompletedTask] = useState(null);
-  const navigate = useNavigate();
-
-  const getAuthToken = useCallback(() => {
-    // این تابع دیگر استفاده نمی‌شود چون api.js خودش مدیریت می‌کند
-    // اما برای جلوگیری از شکستن کد در جاهای دیگر که ممکن است صدا زده شود، فعلاً نگه می‌داریم یا ریفکتور می‌کنیم
-    // بهتر است حذف شود و لاجیک فچ کردن ساده شود
-    return true; 
-  }, []);
 
   useEffect(() => {
     const fetchTasks = async () => {
