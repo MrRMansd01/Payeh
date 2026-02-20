@@ -108,3 +108,22 @@ Payeh/
 │   └── package.json
 │
 └── vercel.json         # Deployment configuration for Vercel
+
+
+۳. چطور تغییرات لوکال رو به آنلاین بفرستیم؟ (Push)
+npx supabase db push
+نکته: دفعه بعد که خواستی کار کنی، فقط کافیه بزنی npx supabase start -x logflare,vector,supavisor,imgproxy و دوباره پروژه‌ات وصل می‌شه.
+
+
+۱. توقف کامل (Stop)
+وقتی کارت تموم شد، برای اینکه RAM و CPU کاملاً آزاد بشن، توی پوشه پروژه این رو بزن:
+
+npx supabase stop
+
+۲. شروع مجدد (Start)
+
+npx supabase start -x logflare,vector,supavisor,imgproxy,edge-runtime
+
+۳. چطور تغییرات لوکال رو به آنلاین بفرستیم؟ (Push)
+npx supabase db push
+نکته: دفعه بعد که خواستی کار کنی، فقط کافیه بزنی npx supabase start -x logflare,vector,supavisor,imgproxy و دوباره پروژه‌ات وصل می‌شه.
