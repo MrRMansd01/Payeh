@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../api';
-import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import './Room.css';
 
@@ -69,25 +68,10 @@ const Room = () => {
   const [leaderboard, setLeaderboard] = useState({ time: [], score: [] });
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  const getAuthToken = useCallback(() => {
-    const sessionDataString = localStorage.getItem('supabaseSession');
-    if (!sessionDataString) {
-        navigate('/join');
-        return null;
-    }
-    return JSON.parse(sessionDataString).access_token;
-  }, [navigate]);
 
   const fetchData = useCallback(async () => {
-    const token = getAuthToken();
-    if (!token) return;
     try {
-      // ارسال یک درخواست به مسیر جدید
-      const response = await api.get('/room/data', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      const response = await api.get('/room/data');
       setLeaderboard(response.data.leaderboard);
       setStats(response.data.stats);
     } catch (error) {
@@ -95,21 +79,15 @@ const Room = () => {
     } finally {
       setLoading(false);
     }
-  }, [getAuthToken]);
+  }, []);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
   const handleSessionComplete = async (duration, points) => {
-    const token = getAuthToken();
-    if (!token) return;
-
     try {
-      await api.post('/room/complete-session', 
-        { duration, points },
-        { headers: { 'Authorization': `Bearer ${token}` } }
-      );
+      await api.post('/room/complete-session', { duration, points });
       fetchData();
     } catch (error) {
       console.error("Error completing session:", error);

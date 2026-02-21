@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
+import { supabase } from '../supabaseClient';
 import Footer from '../components/Footer';
 import './Accent.css';
 
@@ -9,24 +10,10 @@ const Accent = () => {
     const [userInfo, setUserInfo] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const getAuthToken = useCallback(() => {
-        const sessionDataString = localStorage.getItem('supabaseSession');
-        if (!sessionDataString) {
-            navigate('/join');
-            return null;
-        }
-        return JSON.parse(sessionDataString).access_token;
-    }, [navigate]);
-
     useEffect(() => {
         const fetchProfile = async () => {
-            const token = getAuthToken();
-            if (!token) return;
-
             try {
-                const response = await api.get('/profile/me', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
+                const response = await api.get('/profile/me');
                 setUserInfo(response.data);
             } catch (error) {
                 console.error("Error fetching user profile:", error);
@@ -36,20 +23,15 @@ const Accent = () => {
         };
 
         fetchProfile();
-    }, [getAuthToken]);
+    }, []);
 
     const handleLogout = async () => {
-        const token = getAuthToken();
-        if (!token) return;
-
         try {
-            await api.post('/auth/logout', {}, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+            await api.post('/auth/logout', {});
         } catch (error) {
             console.error("Logout error:", error);
         } finally {
-            localStorage.removeItem('supabaseSession');
+            await supabase.auth.signOut();
             navigate('/join');
         }
     };

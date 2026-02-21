@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import api from '../api'; 
-import { useNavigate } from 'react-router-dom';
+import api from '../api';
 import { useSwipeable } from 'react-swipeable';
 import Footer from '../components/Footer';
 import './Calendar.css';
@@ -124,46 +123,27 @@ const Calendar = () => {
     const [tasks, setTasks] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [completedTask, setCompletedTask] = useState(null); // --- استیت برای پاپ‌آپ ---
-    const navigate = useNavigate();
     const dateInputRef = useRef(null);
 
-    const getAuthToken = useCallback(() => {
-        const sessionDataString = localStorage.getItem('supabaseSession');
-        if (!sessionDataString) {
-            navigate('/join');
-            return null;
-        }
-        return JSON.parse(sessionDataString).access_token;
-    }, [navigate]);
-
     const fetchTasksByDate = useCallback(async (date) => {
-        const token = getAuthToken();
-        if (!token) return;
-
         const dateStr = toYYYYMMDD(date);
         try {
             const response = await api.get(`/tasks`, {
-                headers: { 'Authorization': `Bearer ${token}` },
                 params: { date: dateStr }
             });
             setTasks(response.data);
         } catch (error) {
             console.error("Error fetching tasks:", error);
         }
-    }, [getAuthToken]);
+    }, []);
 
     useEffect(() => {
         fetchTasksByDate(selectedDate);
     }, [selectedDate, fetchTasksByDate]);
 
     const handleAddTask = async (newTaskData) => {
-        const token = getAuthToken();
-        if (!token) return;
-
         try {
-            const response = await api.post('/tasks', newTaskData, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+            const response = await api.post('/tasks', newTaskData);
             setTasks(prevTasks => [...prevTasks, response.data]);
         } catch (error) {
             console.error("Error adding task:", error);
@@ -172,15 +152,9 @@ const Calendar = () => {
     };
 
     const handleCompleteTask = async (taskToComplete) => {
-        const token = getAuthToken();
-        if (!token) return;
-
         try {
-            const response = await api.patch(`/tasks/${taskToComplete.id}/complete`, {}, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+            const response = await api.patch(`/tasks/${taskToComplete.id}/complete`, {});
             setTasks(tasks.map(t => t.id === taskToComplete.id ? response.data : t));
-            // --- نمایش پاپ‌آپ ---
             setCompletedTask(taskToComplete);
         } catch (error) {
             console.error("Error completing task:", error);
@@ -188,13 +162,8 @@ const Calendar = () => {
     };
 
     const handleDeleteTask = async (taskId) => {
-        const token = getAuthToken();
-        if (!token) return;
-
         try {
-            await api.delete(`/tasks/${taskId}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+            await api.delete(`/tasks/${taskId}`);
             setTasks(tasks.filter(t => t.id !== taskId));
         } catch (error) {
             console.error("Error deleting task:", error);
