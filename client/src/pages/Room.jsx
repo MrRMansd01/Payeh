@@ -116,21 +116,25 @@ const Room = () => {
             <h2>Leaderboard</h2>
             <div className="leaderboard-section">
               <h3>Time</h3>
-              {leaderboard.time.map((user, index) => (
-                <div key={index} className="leaderboard-row">
-                  <div className="user-info"><img src={user.avatarUrl} alt={user.name} className="avatar" /><span>{user.name}</span></div>
-                  <span className="user-metric">{user.value}</span>
-                </div>
-              ))}
+              <div className="leaderboard-list">
+                {leaderboard.time.map((user, index) => (
+                  <div key={index} className="leaderboard-row">
+                    <div className="user-info"><img src={user.avatarUrl} alt={user.name} className="avatar" /><span>{user.name}</span></div>
+                    <span className="user-metric">{user.value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="leaderboard-section">
               <h3>Score</h3>
-              {leaderboard.score.map((user, index) => (
-                <div key={index} className="leaderboard-row">
-                  <div className="user-info"><img src={user.avatarUrl} alt={user.name} className="avatar" /><span>{user.name}</span></div>
-                  <span className="user-metric">{user.value}</span>
-                </div>
-              ))}
+              <div className="leaderboard-list">
+                {leaderboard.score.map((user, index) => (
+                  <div key={index} className="leaderboard-row">
+                    <div className="user-info"><img src={user.avatarUrl} alt={user.name} className="avatar" /><span>{user.name}</span></div>
+                    <span className="user-metric">{user.value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}

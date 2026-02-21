@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import { supabase } from '../supabaseClient'; // کلاینت سوپربیس فرانت‌اند
@@ -13,24 +13,10 @@ const MyAccount = () => {
     const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef(null);
 
-    const getAuthToken = useCallback(() => {
-        const sessionDataString = localStorage.getItem('supabaseSession');
-        if (!sessionDataString) {
-            navigate('/join');
-            return null;
-        }
-        return JSON.parse(sessionDataString).access_token;
-    }, [navigate]);
-
     useEffect(() => {
         const fetchProfile = async () => {
-            const token = getAuthToken();
-            if (!token) return;
-
             try {
-                const response = await api.get('/profile/me', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
+                const response = await api.get('/profile/me');
                 setFormData({
                     name: response.data.name || '',
                     username: response.data.username || '',
@@ -45,7 +31,7 @@ const MyAccount = () => {
         };
 
         fetchProfile();
-    }, [getAuthToken]);
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -55,9 +41,6 @@ const MyAccount = () => {
     const handleFileChangeAndUpload = async (event) => {
         const file = event.target.files[0];
         if (!file) return;
-
-        const token = getAuthToken();
-        if (!token) return;
 
         setUploading(true);
 
@@ -78,10 +61,7 @@ const MyAccount = () => {
             
             const publicUrl = data.publicUrl;
             
-            await api.put('/profile/me', 
-                { avatar_url: publicUrl },
-                { headers: { 'Authorization': `Bearer ${token}` } }
-            );
+            await api.put('/profile/me', { avatar_url: publicUrl });
 
             setAvatarUrl(publicUrl);
             alert("Avatar updated successfully!");
@@ -96,14 +76,10 @@ const MyAccount = () => {
 
 
     const handleSaveChanges = async () => {
-        const token = getAuthToken();
-        if (!token) return;
-
         setUploading(true); // از همان state لودینگ استفاده می‌کنیم
         try {
             await api.put('/profile/me', 
-                { name: formData.name, username: formData.username },
-                { headers: { 'Authorization': `Bearer ${token}` } }
+                { name: formData.name, username: formData.username }
             );
             alert("Profile details updated successfully!");
             navigate('/accent');

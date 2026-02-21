@@ -109,9 +109,18 @@
 .leaderboard-card h2 { font-size: 1.4rem; font-weight: 500; margin: 0 0 -10px 0; } /* اندازه فونت کوچک‌تر شد */
 .leaderboard-section { 
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.leaderboard-section:last-child { margin-bottom: 0; }
+.leaderboard-section h3 { font-size: 1.1rem; margin-bottom: 12px; flex-shrink: 0; } /* اندازه فونت کوچک‌تر شد */
+.leaderboard-list {
+  max-height: 200px;
   overflow-y: auto;
- }
-.leaderboard-section h3 { font-size: 1.1rem; margin-bottom: 12px; } /* اندازه فونت کوچک‌تر شد */
+  -webkit-overflow-scrolling: touch;
+  min-height: 0;
+}
 .leaderboard-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
 .user-info { display: flex; align-items: center; gap: 12px; }
 .avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
