@@ -1,0 +1,17 @@
+{
+  "name": "payeh",
+  "version": "1.0.0",
+  "description": "پلتفرم پایه - لندینگ، کنسول و وب‌اپ با یک دستور استارت",
+  "private": true,
+  "scripts": {
+    "start": "node scripts/copy-env.js && concurrently -n landing,console,supabase,api,webapp -c blue,green,magenta,yellow,cyan \"npx serve . -l 5173\" \"node console/server.js\" \"npm run start:supabase\" \"npm run start:api\" \"npm run start:webapp\"",
+    "start:supabase": "cd \"wed app/supabase\" && npx supabase start",
+    "start:api": "cd \"wed app/api\" && npm start",
+    "start:webapp": "cd \"wed app/client\" && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "dotenv": "^16.4.5",
+    "serve": "^14.2.4"
+  }
+}

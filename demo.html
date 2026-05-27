@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دموی پلتفرم پایه | انتخاب نقش</title>
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        wealth: {
+                            darkest: '#052213',
+                            dark: '#0a3b22',
+                            base: '#125b36',
+                            gold: '#D4AF37',
+                            goldlight: '#f9f1d8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; background-color: #f4f7f5; }
+    </style>
+</head>
+<body class="min-h-screen bg-[#f4f7f5] flex flex-col">
+
+    <header class="w-full bg-white/90 border-b border-gray-100 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-9 h-9 bg-wealth-dark rounded-lg flex items-center justify-center text-wealth-gold text-lg">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <span class="text-xl font-black text-wealth-dark">پـایـه</span>
+            </div>
+            <a href="index.html" class="text-xs text-gray-500 hover:text-wealth-base flex items-center gap-1">
+                بازگشت به صفحه اصلی
+                <i class="fas fa-arrow-left text-[10px]"></i>
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center px-4 py-10">
+        <div class="w-full max-w-4xl bg-white rounded-3xl shadow-[0_20px_50px_rgba(10,59,34,0.12)] border border-wealth-gold/10 p-6 md:p-10">
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-2/5 border-l border-gray-100 pr-0 md:pr-6 md:border-l-0 md:border-r">
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-wealth-dark mb-4">
+                        انتخاب سناریوی دموی شما
+                    </h1>
+                    <p class="text-sm text-gray-600 leading-relaxed mb-6">
+                        ابتدا مشخص کنید می‌خواهید دموی کدام بخش را ببینید و با چه نقشی وارد شوید. در مرحله بعد،
+                        صفحه لاگین/جوین به صورت خودکار با مشخصات دمو پر می‌شود.
+                    </p>
+                    <div class="bg-wealth-goldlight/70 border border-wealth-gold/50 rounded-2xl p-4 text-xs text-wealth-darkest space-y-2">
+                        <div class="flex gap-2 items-start">
+                            <i class="fas fa-info-circle mt-0.5 text-wealth-base"></i>
+                            <div>
+                                <p class="font-bold mb-1">نکته:</p>
+                                <p>اطلاعات ورود دمو را بعداً می‌توانید در کد این صفحه در بخش
+                                    <span class="font-mono bg-yellow-100 px-1 rounded">demoProfiles</span>
+                                    به ایمیل/کد واقعی مدرسه خودتان تغییر دهید.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:w-3/5">
+                    <form id="demo-form" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">
+                                ۱. بخش مورد نظر
+                            </label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <button type="button" data-target="http://localhost:4001/login.html"
+                                        class="demo-target-btn flex items-center justify-between border border-gray-200 rounded-2xl px-4 py-3 text-right hover:border-wealth-base hover:bg-wealth-goldlight/60 transition cursor-pointer">
+                                    <div>
+                                        <div class="font-bold text-sm text-wealth-dark">کنسول مدیریت</div>
+                                        <div class="text-xs text-gray-500 mt-1">مخصوص مدیر، معاون و کادر اجرایی</div>
+                                    </div>
+                                    <i class="fas fa-laptop-house text-wealth-base text-lg"></i>
+                                </button>
+
+                                <button type="button" data-target="http://localhost:3000/join"
+                                        class="demo-target-btn flex items-center justify-between border border-gray-200 rounded-2xl px-4 py-3 text-right hover:border-wealth-base hover:bg-wealth-goldlight/60 transition cursor-pointer">
+                                    <div>
+                                        <div class="font-bold text-sm text-wealth-dark">اپلیکیشن دانش‌آموز / معلم</div>
+                                        <div class="text-xs text-gray-500 mt-1">وب‌اپ / اندروید روزانه برای کاربران</div>
+                                    </div>
+                                    <i class="fas fa-mobile-alt text-wealth-base text-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">
+                                ۲. نقش کاربر در دمو
+                            </label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                                <button type="button" data-role="admin"
+                                        class="role-btn border border-gray-200 rounded-2xl px-3 py-2.5 hover:border-wealth-base hover:bg-wealth-goldlight/60 transition cursor-pointer flex flex-col gap-1">
+                                    <span class="font-bold text-wealth-dark">مدیر</span>
+                                    <span class="text-[11px] text-gray-500">دسترسی کامل مدیریتی</span>
+                                </button>
+                                <button type="button" data-role="teacher"
+                                        class="role-btn border border-gray-200 rounded-2xl px-3 py-2.5 hover:border-wealth-base hover:bg-wealth-goldlight/60 transition cursor-pointer flex flex-col gap-1">
+                                    <span class="font-bold text-wealth-dark">معلم</span>
+                                    <span class="text-[11px] text-gray-500">مدیریت کلاس و تکالیف</span>
+                                </button>
+                                <button type="button" data-role="student"
+                                        class="role-btn border border-gray-200 rounded-2xl px-3 py-2.5 hover:border-wealth-base hover:bg-wealth-goldlight/60 transition cursor-pointer flex flex-col gap-1">
+                                    <span class="font-bold text-wealth-dark">دانش‌آموز</span>
+                                    <span class="text-[11px] text-gray-500">استفاده روزانه از اپلیکیشن</span>
+                                </button>
+                                <button type="button" data-role="parent"
+                                        class="role-btn border border-gray-200 rounded-2xl px-3 py-2.5 hover:border-wealth-base hover:bg-wealth-goldlight/60 transition cursor-pointer flex flex-col gap-1">
+                                    <span class="font-bold text-wealth-dark">اولیا</span>
+                                    <span class="text-[11px] text-gray-500">نمای کلی عملکرد فرزند</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-dashed border-gray-200 pt-4">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                <div class="text-xs text-gray-500 space-y-1">
+                                    <p><span class="font-bold text-wealth-dark">خروجی:</span> ذخیره انتخاب شما در
+                                        <span class="font-mono bg-gray-100 px-1 rounded">localStorage</span>
+                                        و انتقال به صفحه دمو انتخاب‌شده.
+                                    </p>
+                                    <p>در صفحه بعدی فیلدهای لاگین/جوین به صورت خودکار پر می‌شوند.</p>
+                                </div>
+
+                                <button type="submit"
+                                        class="w-full md:w-auto bg-wealth-base hover:bg-wealth-dark text-white font-bold rounded-2xl px-6 py-3 flex items-center justify-center gap-2 text-sm shadow-lg">
+                                    ادامه و ورود به دمو
+                                    <i class="fas fa-arrow-left text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-4 text-center text-[11px] text-gray-400">
+        دموی مفهومی پلتفرم پایه – می‌توانید این ساختار را روی کنسول و وب‌اپ اصلی خودتان سوار کنید.
+    </footer>
+
+    <script>
+        // مقادیر پیش‌فرض دمو – بر اساس اکانت‌هایی که تعریف کرده‌اید
+        const demoProfiles = {
+            admin: {
+                role: 'admin',
+                fullName: 'مدیر مدرسه دمو',
+                email: 'admin@demo.com',
+                password: 'qwe123',
+                joinCode: 'ADMIN-001'
+            },
+            teacher: {
+                role: 'teacher',
+                fullName: 'معلم دمو',
+                email: 'teacher@demo.com',
+                password: 'qwe123',
+                joinCode: 'TEACH-001'
+            },
+            student: {
+                role: 'student',
+                fullName: 'دانش‌آموز دمو',
+                email: 'student1@demo.com',
+                password: 'qwe123',
+                joinCode: 'STUD-001'
+            },
+            parent: {
+                role: 'parent',
+                fullName: 'ولی دانش‌آموز دمو',
+                email: 'parent.demo@school.test',
+                password: 'ParentDemo123',
+                joinCode: 'PAR-001'
+            }
+        };
+
+        let selectedTarget = null;
+        let selectedRole = null;
+
+        const targetButtons = document.querySelectorAll('.demo-target-btn');
+        const roleButtons = document.querySelectorAll('.role-btn');
+
+        targetButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                targetButtons.forEach(b => b.classList.remove('ring-2', 'ring-wealth-base', 'bg-wealth-goldlight/80'));
+                btn.classList.add('ring-2', 'ring-wealth-base', 'bg-wealth-goldlight/80');
+                selectedTarget = btn.getAttribute('data-target');
+            });
+        });
+
+        roleButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                roleButtons.forEach(b => b.classList.remove('ring-2', 'ring-wealth-base', 'bg-wealth-goldlight/80'));
+                btn.classList.add('ring-2', 'ring-wealth-base', 'bg-wealth-goldlight/80');
+                selectedRole = btn.getAttribute('data-role');
+            });
+        });
+
+        document.getElementById('demo-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!selectedTarget || !selectedRole) {
+                alert('لطفاً هم بخش مورد نظر و هم نقش خود را برای دمو انتخاب کنید.');
+                return;
+            }
+
+            const profile = demoProfiles[selectedRole] || demoProfiles.student;
+
+            // URL مقصد (کنسول یا وب‌اپ) را با پارامترهای دمو می‌سازیم
+            const url = new URL(selectedTarget);
+            url.searchParams.set('demo_email', profile.email);
+            url.searchParams.set('demo_password', profile.password);
+            url.searchParams.set('demo_role', profile.role);
+
+            window.location.href = url.toString();
+        });
+    </script>
+</body>
+</html>
+

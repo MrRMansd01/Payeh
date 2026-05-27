@@ -1,0 +1,315 @@
+/* --- Calendar Page Layout --- */
+.calendar-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+  margin-top: 0px;
+  padding: 20px 16px 80px 16px;
+  box-sizing: border-box;
+  direction: ltr;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+.calendar-header p { margin: 0; color: #666; font-size: 1rem; }
+.calendar-header h3 { margin: 0; font-size: 1.8rem; color: #181D27; }
+.calendar-icon-button { background: none; border: none; font-size: 1.8rem; cursor: pointer; }
+
+/* --- Week View --- */
+.week-view-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+.day-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 5px;
+  border-radius: 12px;
+  cursor: pointer;
+  min-width: 45px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.day-name { font-size: 0.9rem; color: #666; }
+.day-number { font-size: 1.2rem; font-weight: bold; margin-top: 8px; }
+.day-item:hover { background-color: #f0f0f0; }
+.day-item.active { background-color: #00664F; }
+.day-item.active .day-name, .day-item.active .day-number { color: white; }
+
+/* --- Task List --- */
+.calendar-task-list-container {
+  background-color: #00664F;
+  border-radius: 24px;
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.task-list-scrollable { overflow-y: auto; }
+
+.calendar-task-item-wrapper {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  touch-action: pan-y;
+}
+
+.swipe-action-background {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  color: white;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.swipe-action-background.complete {
+  left: 0;
+  width: 50%;
+  background-color: #2BBA90;
+  padding-left: 20px;
+  justify-content: flex-start;
+}
+.swipe-action-background.info {
+  right: 0;
+  left: auto;
+  width: 50%;
+  background-color: #00664F;
+  padding-right: 20px;
+  justify-content: flex-end;
+}
+
+.calendar-task-item {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+}
+
+.calendar-task-item.completed .task-item-title { text-decoration: line-through; }
+.calendar-task-item.reveal-delete { transform: translateX(-150px); z-index: 0; }
+.calendar-task-item-wrapper.reveal-delete .delete-confirm-container { z-index: 3; pointer-events: auto; }
+
+.task-color-indicator { width: 6px; height: 50px; border-radius: 3px; margin-right: 20px; }
+.task-item-details { flex-grow: 1; }
+.task-item-title { font-weight: 500; font-size: 1.1rem; margin: 0 0 5px 0; }
+.task-item-time { color: #666; font-size: 0.9rem; margin: 0; }
+
+.delete-confirm-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 150px;
+  display: flex;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.delete-confirm-container button {
+  flex-grow: 1;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.delete-confirm-container .delete-btn { background-color: #EC0000; }
+.delete-confirm-container .cancel-btn { background-color: #b0b0b0; }
+
+/* --- Add Task Modal --- */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 9999; /* بالاتر از همه؛ مودال با Portal در body رندر می‌شود */
+}
+.modal-content {
+  background-color: white;
+  width: 100%;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  padding: 20px;
+  box-sizing: border-box;
+  will-change: transform, opacity;
+  animation: slide-up 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes slide-up {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.modal-header h2 { margin: 0; font-size: 1.5rem; }
+.close-button { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #888; }
+.add-task-form .form-group { margin-bottom: 20px; }
+.add-task-form label { display: block; margin-bottom: 8px; font-weight: 500; color: #626060; }
+.add-task-form input[type="text"], .add-task-form input[type="time"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+.form-group-row { display: flex; gap: 16px; margin-bottom: 20px; }
+.form-group-row .form-group { flex-grow: 1; margin-bottom: 0; }
+.category-selector { display: flex; gap: 10px; }
+.cat-btn { flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background-color: #f9f9f9; cursor: pointer; font-weight: 500; }
+.cat-btn.active { border-width: 2px; font-weight: bold; }
+.cat-btn.cat-1.active { border-color: #2BBA90; background-color: #e9f8f3; }
+.cat-btn.cat-2.active { border-color: #ECB800; background-color: #fef8e5; }
+.cat-btn.cat-3.active { border-color: #EC0000; background-color: #fee5e5; }
+.create-task-button { width: 100%; padding: 16px; border-radius: 12px; border: none; background-color: #00664F; color: white; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+
+/* --- مودال اقدام تسک (نمای پاپ‌آپ وسط صفحه، مثل «تسک انجام شد») --- */
+.task-action-popup-card {
+  text-align: right;
+  max-width: 380px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.task-action-popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.task-action-popup-title { margin: 0; font-size: 1.25rem; }
+.task-action-modal-body { padding: 0 0 20px; flex-grow: 1; }
+.task-action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+.task-action-row.task-action-description { flex-direction: column; align-items: stretch; }
+.task-action-label { font-weight: 500; color: #626060; flex-shrink: 0; }
+.task-action-value { color: #181D27; }
+.task-action-points { font-weight: bold; color: #00664F; }
+.task-action-desc-input {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  resize: vertical;
+  min-height: 72px;
+  box-sizing: border-box;
+}
+.task-action-saving { font-size: 0.85rem; color: #666; margin-top: 4px; display: block; }
+.task-action-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.task-action-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.task-action-submit { background-color: #00664F; color: white; }
+.task-action-delete { background-color: #EC0000; color: white; }
+.task-action-incomplete { background-color: #666; color: white; }
+
+/* --- تقویم شمسی پاپ‌اور (بالای صفحه) --- */
+.persian-picker-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99998;
+}
+.persian-picker-popover {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 340px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  padding: 16px;
+  z-index: 99999;
+  direction: rtl;
+}
+.persian-picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.persian-picker-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #181D27;
+}
+.persian-picker-nav {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #00664F;
+  padding: 4px 12px;
+}
+.persian-picker-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+  text-align: center;
+  direction: rtl;
+}
+.persian-picker-weekday {
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 500;
+}
+.persian-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  direction: rtl;
+  text-align: center;
+}
+.persian-picker-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: #f5f5f5;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #333;
+}
+.persian-picker-day.empty {
+  background: transparent;
+  cursor: default;
+}
+.persian-picker-day.active {
+  background: #00664F;
+  color: #fff;
+  font-weight: 600;
+}
+.persian-picker-day:not(.empty):hover {
+  background: #e0e0e0;
+}

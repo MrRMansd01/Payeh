@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پلتفرم یکپارچه آموزشی پایه | اکوسیستم هوشمند مدارس</title>
+    
+    <!--فونت وزیرمتن-->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <!-- آیکون‌ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- تیلویند همراه با تنظیمات رنگ سفارشی (سبز پولداری و طلایی) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        wealth: {
+                            darkest: '#052213', // سبز بسیار تیره (پس زمینه)
+                            dark: '#0a3b22',    // سبز یشمی پولداری (رنگ اصلی)
+                            base: '#125b36',    // سبز روشن‌تر برای دکمه‌ها
+                            gold: '#D4AF37',    // طلایی لوکس
+                            goldlight: '#f9f1d8'// طلایی بسیار روشن برای پس‌زمینه
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Vazirmatn', sans-serif; background-color: #fcfcfc; }
+        
+        .hero-pattern {
+            background-color: #0a3b22;
+            background-image: radial-gradient(circle at top right, #125b36 0%, transparent 40%),
+                              radial-gradient(circle at bottom left, #052213 0%, transparent 40%);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .gold-gradient-text {
+            background: linear-gradient(to right, #D4AF37, #F3E5AB, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased selection:bg-wealth-gold selection:text-wealth-darkest">
+
+    <!-- نویگیشن بار -->
+    <header class="fixed w-full z-50 bg-white/95 backdrop-blur shadow-sm border-b border-gray-100">
+        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-wealth-dark rounded-lg flex items-center justify-center text-wealth-gold text-xl shadow-lg">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <span class="text-2xl font-black text-wealth-dark tracking-tight">پـایـه</span>
+            </div>
+            
+            <nav class="hidden md:flex gap-8 text-sm font-bold text-gray-600">
+                <a href="#features" class="hover:text-wealth-base transition-colors">راهکارها</a>
+                <a href="#products" class="hover:text-wealth-base transition-colors">محصولات</a>
+                <a href="#pricing" class="hover:text-wealth-base transition-colors">تعرفه‌ها</a>
+                <a href="#about" class="hover:text-wealth-base transition-colors">درباره ما</a>
+            </nav>
+            
+            <a href="#action-center" class="bg-wealth-gold text-wealth-darkest font-bold px-5 py-2.5 rounded-md hover:bg-yellow-500 transition-all shadow-md hover:shadow-lg flex items-center gap-2 text-sm">
+                <span>شروع کنید</span>
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- بخش قهرمان (Hero) -->
+    <section class="hero-pattern pt-36 pb-24 lg:pt-48 lg:pb-32 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-wealth-gold/20 text-wealth-gold border border-wealth-gold/30 text-sm font-bold mb-6">
+                <i class="fas fa-star text-xs ml-1"></i> نسل جدید مدیریت مدارس
+            </span>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight">
+                اکوسیستم یکپارچه <span class="gold-gradient-text">آموزشی پایه</span>
+            </h1>
+            <p class="text-lg md:text-xl mb-12 text-gray-300 max-w-3xl mx-auto font-light leading-relaxed">
+                پلتفرمی فراتر از مدیریت سنتی. با خودکارسازی فرآیندها و ایجاد ارتباط یکپارچه میان کادر اجرایی، معلمان و دانش‌آموزان، بستری برای رشد و تعالی موسسه خود فراهم کنید.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#action-center" class="bg-wealth-gold text-wealth-darkest px-8 py-4 rounded-lg font-extrabold hover:bg-yellow-400 transition-all shadow-[0_0_20px_rgba(212,175,55,0.4)] text-lg flex items-center justify-center gap-2">
+                    <i class="fas fa-desktop"></i>
+                    تجربه نسخه دمو
+                </a>
+                <a href="#action-center" class="bg-white/10 border border-white/30 text-white backdrop-blur px-8 py-4 rounded-lg font-bold hover:bg-white/20 transition-all text-lg flex items-center justify-center gap-2">
+                    <i class="fas fa-phone-alt"></i>
+                    مشاوره و تماس
+                </a>
+            </div>
+        </div>
+        
+        <!-- موج پایین -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-full h-12 lg:h-24" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,130.85,130.22,201.3,121.23,242.74,115.9,282.88,88.7,321.39,56.44Z" class="fill-[#fcfcfc]"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- چالش‌ها و راهکارها -->
+    <section id="features" class="py-20 bg-[#fcfcfc]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-wealth-dark mb-4">چرا مدارس پیشرو "پایه" را انتخاب می‌کنند؟</h2>
+                <div class="w-24 h-1 bg-wealth-gold mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- مورد 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-wealth-gold hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-14 h-14 bg-wealth-goldlight rounded-xl flex items-center justify-center text-wealth-dark text-2xl mb-6 shadow-inner">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-wealth-dark">کاهش ۴۰٪ بار کاری</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        خودکارسازی امور اداری، ثبت دستی نمرات و گزارش‌گیری. آپلود گروهی وظایف از اکسل.
+                    </p>
+                </div>
+                <!-- مورد 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-wealth-dark hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center text-wealth-dark text-2xl mb-6 shadow-inner">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-wealth-dark">گزارش‌گیری تحلیلی</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        کارنامه هوشمند و گزارش‌های بصری دقیق از عملکرد هر دانش‌آموز برای شناسایی نقاط ضعف و قوت.
+                    </p>
+                </div>
+                <!-- مورد 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-wealth-gold hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-14 h-14 bg-wealth-goldlight rounded-xl flex items-center justify-center text-wealth-dark text-2xl mb-6 shadow-inner">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-wealth-dark">ارتباطات امن</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        سیستم چت یکپارچه در محیطی امن و قابل نظارت به جای استفاده از پیام‌رسان‌های شخصی.
+                    </p>
+                </div>
+                <!-- مورد 4 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-wealth-dark hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center text-wealth-dark text-2xl mb-6 shadow-inner">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-wealth-dark">افزایش تمرکز</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        اتاق تمرکز با تکنیک پومودورو و سیستم امتیازدهی برای تشویق دانش‌آموزان به مدیریت زمان.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- معرفی محصولات -->
+    <section id="products" class="py-20 bg-wealth-goldlight/30">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-wealth-dark mb-6">دو بال قدرتمند اکوسیستم پایه</h2>
+                    
+                    <div class="space-y-8 mt-10">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-wealth-dark text-wealth-gold rounded-full flex items-center justify-center text-xl shadow-md">
+                                <i class="fas fa-laptop-house"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-wealth-dark mb-2">کنسول مدیریت (مرکز فرماندهی)</h3>
+                                <p class="text-gray-600 leading-relaxed text-sm">مدیریت کامل کاربران (مدیر، معلم، دانش‌آموز)، مدیریت تکالیف و آزمون‌ها، سیستم ثبت نمرات و داشبوردهای جامع تحلیلی برای بررسی عملکرد مدرسه.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-wealth-gold text-wealth-darkest rounded-full flex items-center justify-center text-xl shadow-md">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-wealth-dark mb-2">اپلیکیشن اندروید و وب</h3>
+                                <p class="text-gray-600 leading-relaxed text-sm">ابزار روزانه دانش‌آموزان و معلمان شامل داشبورد شخصی، تقویم هوشمند، چت امن درون‌مدرسه‌ای و اتاق تمرکز بر پایه متد پومودورو.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 relative">
+                    <!-- Placeholder for Mockup Images -->
+                    <div class="bg-wealth-dark rounded-2xl aspect-[4/3] shadow-2xl relative overflow-hidden border-4 border-white flex items-center justify-center">
+                         <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+                         <i class="fas fa-photo-video text-6xl text-wealth-gold/50 mb-4 absolute"></i>
+                         <p class="text-wealth-gold font-bold relative z-10 text-xl bg-wealth-darkest/50 px-6 py-2 rounded-full border border-wealth-gold/30 backdrop-blur">نمای پلتفرم و اپلیکیشن</p>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-wealth-gold rounded-full opacity-20 blur-xl"></div>
+                    <div class="absolute -top-6 -left-6 w-32 h-32 bg-wealth-dark rounded-full opacity-20 blur-xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قیمت گذاری -->
+    <section id="pricing" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-wealth-dark mb-4">سرمایه‌گذاری روی آینده مدرسه</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">مدل قیمت‌گذاری شفاف و مقیاس‌پذیر بر اساس تعداد دانش‌آموزان موسسه شما.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
+                <!-- Basic -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 text-center relative overflow-hidden">
+                    <h3 class="text-xl font-bold mb-2 text-gray-800">پایه (Basic)</h3>
+                    <p class="text-sm text-gray-500 mb-6">مدارس کوچک تا ۱۵۰ دانش‌آموز</p>
+                    <div class="text-4xl font-black text-wealth-dark mb-2">۳۰۰<span class="text-lg font-normal text-gray-500">هزار تومان</span></div>
+                    <p class="text-xs text-gray-400 mb-8 font-bold bg-gray-50 py-1 rounded-md">سالانه / به ازای هر دانش‌آموز</p>
+                    
+                    <ul class="text-right space-y-4 mb-8 text-sm text-gray-600">
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-wealth-gold"></i> مدیریت کاربران و تکالیف</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-wealth-gold"></i> تقویم آموزشی هوشمند</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-wealth-gold"></i> چت امن درون سیستمی</li>
+                    </ul>
+                </div>
+
+                <!-- Pro (VIP) -->
+                <div class="bg-wealth-dark text-white p-10 rounded-2xl shadow-2xl border-2 border-wealth-gold transform md:-translate-y-4 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-wealth-gold text-wealth-darkest text-xs font-bold px-4 py-1 rounded-bl-lg shadow-md">پیشنهاد ویژه</div>
+                    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold mb-2 text-wealth-gold">حرفه‌ای (Pro)</h3>
+                        <p class="text-sm text-gray-300 mb-6">مدارس متوسط ۱۵۰ تا ۵۰۰ دانش‌آموز</p>
+                        <div class="text-5xl font-black text-white mb-2">۵۰۰<span class="text-lg font-normal text-wealth-gold">هزار تومان</span></div>
+                        <p class="text-xs text-wealth-darkest bg-wealth-gold py-1 rounded-md mb-8 font-bold inline-block px-3">سالانه / به ازای هر دانش‌آموز</p>
+                        
+                        <ul class="text-right space-y-4 mb-8 text-sm text-gray-200">
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-wealth-gold"></i> تمام ویژگی‌های طرح پایه</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-wealth-gold"></i> سیستم ثبت نمرات جامع</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-wealth-gold"></i> گزارش‌گیری تحلیلی و کارنامه هوشمند</li>
+                            <li class="flex items-center gap-3 font-bold text-wealth-gold"><i class="fas fa-star"></i> ۱۰ روز دوره آزمایشی رایگان</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 text-center relative">
+                    <h3 class="text-xl font-bold mb-2 text-gray-800">سازمانی (Enterprise)</h3>
+                    <p class="text-sm text-gray-500 mb-6">مجتمع‌های بزرگ +۵۰۰ دانش‌آموز</p>
+                    <div class="text-3xl font-black text-wealth-base mb-2 py-2">توافقی</div>
+                    <p class="text-xs text-gray-400 mb-8 font-bold bg-gray-50 py-1 rounded-md">قراردادهای چندساله = تخفیف ویژه</p>
+                    
+                    <ul class="text-right space-y-4 mb-8 text-sm text-gray-600">
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-wealth-gold"></i> تمامی امکانات طرح حرفه‌ای</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-wealth-gold"></i> برندینگ کامل اختصاصی (White-Label)</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-wealth-gold"></i> یکپارچه‌سازی با سیستم‌های موجود</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-wealth-gold"></i> پشتیبانی اختصاصی و VIP</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- درباره توسعه دهنده و امنیت -->
+    <section id="about" class="py-16 bg-wealth-darkest text-gray-300 border-t-4 border-wealth-gold">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="md:w-2/3">
+                    <h2 class="text-2xl font-bold text-wealth-gold mb-4"><i class="fas fa-code mr-2"></i> معماری قدرتمند، توسعه یافته توسط متخصص</h2>
+                    <p class="mb-4 leading-relaxed text-sm">
+                        پلتفرم پایه توسط <strong>محمدرضا روحانی</strong>، معمار و توسعه‌دهنده فول‌استک طراحی شده است. تمرکز ما بر خلق محصولی است که از نظر فنی بسیار قدرتمند و از لحاظ تجربه کاربری بی‌نظیر باشد.
+                    </p>
+                    <div class="flex flex-wrap gap-3 mt-6">
+                        <span class="bg-white/10 px-3 py-1 rounded text-xs font-mono border border-white/20">Kotlin (Native Android)</span>
+                        <span class="bg-white/10 px-3 py-1 rounded text-xs font-mono border border-white/20">Node.js</span>
+                        <span class="bg-white/10 px-3 py-1 rounded text-xs font-mono border border-white/20">Supabase (Secure Cloud)</span>
+                    </div>
+                </div>
+                <div class="md:w-1/3 text-center bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur">
+                    <i class="fas fa-shield-check text-5xl text-wealth-gold mb-4"></i>
+                    <h4 class="text-white font-bold mb-2">امنیت تضمین شده</h4>
+                    <p class="text-xs text-gray-400">حفاظت کامل از داده‌های دانش‌آموزان و کادر آموزشی بر بستر امن ابری.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACTION CENTER: دمو و تماس (بخش اصلی درخواستی) -->
+    <section id="action-center" class="py-24 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] bg-[#f4f7f5] relative">
+        <div class="container mx-auto px-6 max-w-5xl">
+            
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-black text-wealth-dark mb-4">گام بعدی را بردارید</h2>
+                <p class="text-lg text-gray-600">ما آماده‌ایم تا تحول دیجیتال مدرسه شما را آغاز کنیم.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- کارت دمو -->
+                <div class="bg-white rounded-3xl p-10 shadow-[0_20px_50px_rgba(10,59,34,0.1)] border-t-8 border-wealth-base flex flex-col items-center text-center transform transition-all hover:scale-[1.02]">
+                    <div class="w-20 h-20 bg-wealth-goldlight rounded-full flex items-center justify-center text-wealth-dark text-4xl mb-6 shadow-inner">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-wealth-dark mb-4">تجربه محیط کاربری</h3>
+                    <p class="text-gray-500 mb-8 text-sm leading-relaxed">پیش از تصمیم‌گیری، به صورت زنده و تعاملی با قابلیت‌های کنسول مدیریت و اپلیکیشن دانش‌آموز کار کنید و قدرت پلتفرم پایه را لمس کنید.</p>
+                    
+                    <a href="demo.html" class="mt-auto w-full bg-wealth-base text-white font-bold py-4 rounded-xl hover:bg-wealth-dark transition-colors shadow-lg text-lg flex items-center justify-center gap-2 group">
+                        ورود به پنل دمو
+                        <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- کارت تماس مستقیم -->
+                <div class="bg-wealth-dark rounded-3xl p-10 shadow-[0_20px_50px_rgba(10,59,34,0.2)] border-t-8 border-wealth-gold flex flex-col relative overflow-hidden transform transition-all hover:scale-[1.02]">
+                    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+                    <div class="relative z-10 h-full flex flex-col">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 bg-wealth-gold rounded-full flex items-center justify-center text-wealth-darkest text-3xl shadow-lg border-2 border-white/20">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="text-right">
+                                <h3 class="text-xl font-bold text-white">محمدرضا روحانی</h3>
+                                <p class="text-wealth-gold text-sm font-light">معمار و توسعه‌دهنده ارشد پلتفرم</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-8 text-sm leading-relaxed border-b border-white/10 pb-6">
+                            برای هماهنگی جلسه دموی اختصاصی، مشاوره رایگان یا طرح سوالات فنی و تجاری مستقیماً با من در ارتباط باشید.
+                        </p>
+                        
+                        <div class="space-y-4 mt-auto">
+                            <a href="tel:09158973979" class="flex items-center gap-4 bg-white/10 hover:bg-white/20 transition-colors p-4 rounded-xl backdrop-blur group border border-white/5">
+                                <div class="bg-wealth-gold text-wealth-darkest w-10 h-10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs text-gray-400 mb-1">تماس مستقیم</div>
+                                    <div class="text-white font-bold font-mono text-lg" dir="ltr">0915 897 3979</div>
+                                </div>
+                            </a>
+                            
+                            <a href="mailto:mr.rsd01@outlook.com" class="flex items-center gap-4 bg-white/10 hover:bg-white/20 transition-colors p-4 rounded-xl backdrop-blur group border border-white/5">
+                                <div class="bg-wealth-gold text-wealth-darkest w-10 h-10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs text-gray-400 mb-1">ایمیل الکترونیک</div>
+                                    <div class="text-white font-bold font-mono text-sm" dir="ltr">mr.rsd01@outlook.com</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- فوتر -->
+    <footer class="bg-wealth-darkest pt-12 pb-6 border-t border-white/10">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center gap-2 mb-6">
+                <i class="fas fa-leaf text-wealth-gold text-2xl"></i>
+                <span class="text-2xl font-black text-white tracking-tight">پـایـه</span>
+            </div>
+            <p class="text-gray-400 text-sm mb-4">اکوسیستم هوشمند مدارس پیشرو</p>
+            <div class="w-24 h-px bg-white/20 mx-auto mb-6"></div>
+            <p class="text-gray-500 text-xs">
+                &copy; ۱۴۰۴ تمامی حقوق مادی و معنوی پلتفرم پایه محفوظ است.<br>
+                <span class="opacity-70 mt-2 inline-block">توسعه با <i class="fas fa-heart text-red-500 mx-1"></i> توسط محمدرضا روحانی</span>
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کنسول مدیریت - دموی پایه</title>
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        wealth: {
+                            darkest: '#052213',
+                            dark: '#0a3b22',
+                            base: '#125b36',
+                            gold: '#D4AF37',
+                            goldlight: '#f9f1d8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; background-color: #f4f7f5; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="w-full bg-wealth-dark text-white shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-9 h-9 bg-wealth-gold text-wealth-darkest rounded-lg flex items-center justify-center text-lg">
+                    <i class="fas fa-laptop-house"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-sm font-bold text-wealth-gold">کنسول مدیریت</span>
+                    <span class="text-xs text-gray-200">دموی مفهومی پلتفرم پایه</span>
+                </div>
+            </div>
+            <a href="demo.html" class="text-xs text-gray-200 hover:text-white flex items-center gap-1">
+                تغییر نقش
+                <i class="fas fa-sync-alt text-[10px]"></i>
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center px-4 py-10">
+        <div class="w-full max-w-md bg-white rounded-3xl shadow-[0_18px_45px_rgba(10,59,34,0.18)] border-t-4 border-wealth-gold p-7">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h1 class="text-xl font-extrabold text-wealth-dark">ورود به کنسول مدیریت</h1>
+                    <p id="role-label" class="text-xs text-gray-500 mt-1"></p>
+                </div>
+                <div class="w-10 h-10 rounded-xl bg-wealth-goldlight flex items-center justify-center text-wealth-dark">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+            </div>
+
+            <div id="demo-hint" class="mb-5 text-[11px] bg-wealth-goldlight/70 border border-wealth-gold/60 rounded-2xl px-3 py-2 text-wealth-darkest">
+                فیلدهای زیر با اطلاعات دمو از صفحه قبل پر شده‌اند. شما می‌توانید آن‌ها را با مشخصات واقعی پروژه‌ی خود عوض کنید.
+            </div>
+
+            <form id="console-login-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">نام کامل</label>
+                    <input id="fullName" type="text" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-wealth-base focus:border-transparent" placeholder="مثلاً: مدیر مدرسه دمو">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">ایمیل سازمانی</label>
+                    <input id="email" type="email" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-wealth-base focus:border-transparent" dir="ltr" placeholder="admin@school.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">رمز عبور</label>
+                    <input id="password" type="password" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-wealth-base focus:border-transparent" placeholder="حداقل ۸ کاراکتر">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">کد جوین / سازمان</label>
+                    <input id="joinCode" type="text" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-wealth-base focus:border-transparent" dir="ltr" placeholder="مثلاً: ADMIN-001">
+                </div>
+
+                <button type="submit" class="w-full bg-wealth-base hover:bg-wealth-dark text-white font-bold rounded-2xl py-3.5 text-sm flex items-center justify-center gap-2 shadow-lg mt-2">
+                    ورود به کنسول دمو
+                    <i class="fas fa-arrow-left text-xs"></i>
+                </button>
+            </form>
+
+            <p class="mt-4 text-[11px] text-gray-400 leading-relaxed">
+                در پروژه‌ی واقعی شما می‌توانید این فرم را مستقیماً به سوپربیس یا بک‌اند خود وصل کنید.
+                در حال حاضر این صفحه فقط برای نمایش فلوی دمو و پر شدن خودکار فیلدهاست.
+            </p>
+        </div>
+    </main>
+
+    <footer class="py-4 text-center text-[11px] text-gray-400">
+        کنسول مدیریت – دموی مفهومی. اتصال واقعی را روی پروژه‌ی اصلی خودتان پیاده‌سازی کنید.
+    </footer>
+
+    <script>
+        function loadDemoSession() {
+            try {
+                const raw = localStorage.getItem('payeh_demo_session');
+                if (!raw) return null;
+                return JSON.parse(raw);
+            } catch {
+                return null;
+            }
+        }
+
+        const session = loadDemoSession();
+        const roleLabel = document.getElementById('role-label');
+        const demoHint = document.getElementById('demo-hint');
+
+        if (!session || !session.profile) {
+            roleLabel.textContent = 'بدون اطلاعات دمو – مستقیماً این صفحه را باز کرده‌اید.';
+            demoHint.textContent = 'برای دیدن تجربه کامل، بهتر است ابتدا از صفحه "انتخاب سناریوی دمو" وارد شوید.';
+        } else {
+            const p = session.profile;
+            roleLabel.textContent = `ورود به عنوان ${p.fullName} (${p.role})`;
+
+            document.getElementById('fullName').value = p.fullName || '';
+            document.getElementById('email').value = p.email || '';
+            document.getElementById('password').value = p.password || '';
+            document.getElementById('joinCode').value = p.joinCode || '';
+        }
+
+        document.getElementById('console-login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('در نسخه‌ی واقعی، اینجا به کنسول اصلی شما ریدایرکت یا احراز هویت سوپربیس/بک‌اند انجام می‌شود.\nدر حال حاضر این فقط یک دمو است.');
+        });
+    </script>
+</body>
+</html>
+
