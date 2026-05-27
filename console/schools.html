@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت مدارس</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="subjects.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .add-user-section { border: 1px solid #e0e0e0; padding: 1rem; border-radius: 8px; background-color: #f9f9f9; }
+        .table-wrapper { max-height: 250px; overflow-y: auto; }
+        textarea { width: 100%; padding: 0.5rem; font-family: 'Vazirmatn', sans-serif; border: 1px solid #ccc; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>مدیریت مدارس (مدیران)</h1>
+            <a href="/home.html" class="back-to-dashboard-btn">
+                <i class="fas fa-arrow-left"></i> بازگشت به داشبورد
+            </a>
+        </header>
+
+        <main class="content-main">
+            <div class="toolbar">
+                <button id="add-admin-btn" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> افزودن مدیر و مدرسه جدید
+                </button>
+            </div>
+            <div class="table-container">
+                <table id="schools-table">
+                    <thead>
+                        <tr>
+                            <th>نام مدیر</th>
+                            <th>ایمیل</th>
+                            <th>نام مدرسه</th>
+                            <th>محدودیت دانش‌آموز</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Admin rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+                <p id="loading-message">در حال بارگذاری لیست مدیران...</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for editing school details -->
+    <div id="school-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title">ویرایش اطلاعات مدرسه</h2>
+            <form id="school-form">
+                <input type="hidden" id="admin-id">
+                <div class="form-group">
+                    <label>نام مدیر:</label>
+                    <p id="admin-name-display"></p>
+                </div>
+                <div class="form-group">
+                    <label for="school-name">نام مدرسه:</label>
+                    <input type="text" id="school-name" required placeholder="نام مدرسه را وارد کنید">
+                </div>
+                <div class="form-group">
+                    <label for="student-limit">محدودیت دانش‌آموز:</label>
+                    <input type="number" id="student-limit" required placeholder="تعداد مجاز دانش‌آموز">
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+                    <button type="button" id="cancel-btn" class="btn btn-secondary">انصراف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for ADDING a new admin and school -->
+    <div id="add-admin-modal" class="modal">
+        <div class="modal-content">
+            <h2>افزودن مدیر مدرسه جدید</h2>
+            <form id="add-admin-form">
+                <div class="form-group">
+                    <label for="new-admin-name">نام کامل مدیر:</label>
+                    <input type="text" id="new-admin-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-admin-email">ایمیل (برای ورود):</label>
+                    <input type="email" id="new-admin-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-admin-password">رمز عبور:</label>
+                    <input type="password" id="new-admin-password" required>
+                </div>
+                <hr style="margin: 1.5rem 0;">
+                <div class="form-group">
+                    <label for="new-admin-school-name">نام مدرسه:</label>
+                    <input type="text" id="new-admin-school-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-admin-student-limit">محدودیت دانش‌آموز:</label>
+                    <input type="number" id="new-admin-student-limit" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">ایجاد مدیر</button>
+                    <button type="button" id="cancel-add-btn" class="btn btn-secondary">انصراف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal for Managing School Users -->
+    <div id="manage-users-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <h2>مدیریت کاربران مدرسه: <span id="modal-school-name"></span></h2>
+            <input type="hidden" id="modal-admin-id">
+
+            <div class="add-user-section">
+                <h3>افزودن کاربران آزاد به مدرسه</h3>
+                <div class="table-wrapper">
+                    <table id="unassigned-users-table">
+                        <thead>
+                            <tr>
+                                <th>انتخاب</th>
+                                <th>نام</th>
+                                <th>ایمیل</th>
+                                <th>نقش</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Unassigned users will be populated here -->
+                        </tbody>
+                    </table>
+                    <p id="unassigned-users-loading">در حال بارگذاری...</p>
+                </div>
+                <div class="modal-actions" style="justify-content: flex-start; margin-top: 1rem;">
+                    <button id="add-selected-users-btn" class="btn btn-primary">افزودن کاربران انتخاب شده</button>
+                </div>
+            </div>
+
+            <hr style="margin: 1.5rem 0;">
+
+            <h3>کاربران فعلی مدرسه</h3>
+            <div class="table-wrapper">
+                <table id="school-users-table">
+                    <thead>
+                        <tr>
+                            <th>نام</th>
+                            <th>ایمیل</th>
+                            <th>نقش</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- User list will be populated here -->
+                    </tbody>
+                </table>
+                 <p id="school-users-loading">در حال بارگذاری...</p>
+            </div>
+            
+            <hr style="margin: 1.5rem 0;">
+
+            <h3>افزودن دسته‌جمعی دانش‌آموزان</h3>
+            <div class="add-user-section">
+                <form id="bulk-add-form">
+                    <div class="form-group">
+                        <label for="bulk-user-data">اطلاعات دانش‌آموزان را وارد کنید (هر دانش‌آموز در یک خط)</label>
+                        <textarea id="bulk-user-data" rows="5" placeholder="مثال:&#10;نام کامل,ایمیل,رمز عبور&#10;علی رضایی,ali@example.com,pass123&#10;مریم احمدی,maryam@example.com,pass456"></textarea>
+                        <small>فرمت هر خط: <strong>نام کامل,ایمیل,رمز عبور</strong></small>
+                    </div>
+                    <div class="modal-actions" style="justify-content: flex-start; margin-top: 1rem;">
+                        <button type="submit" class="btn btn-primary">افزودن دسته‌جمعی</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-actions" style="margin-top: 2rem;">
+                <button type="button" id="close-manage-users-btn" class="btn btn-secondary">بستن</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="schools.js"></script>
+</body>
+</html>

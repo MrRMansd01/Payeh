@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت وظایف - کنسول پایه</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="subjects.css">
+    <link rel="stylesheet" href="tasks.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>مدیریت وظایف</h1>
+            <a href="/home.html" class="back-to-dashboard-btn">
+                <i class="fas fa-arrow-left"></i> بازگشت به داشبورد
+            </a>
+        </header>
+
+        <main class="content-main">
+            <section class="user-management-section">
+                <div class="user-info">
+                    <h3 id="username">کاربر</h3>
+                    <button id="logout-btn" class="btn btn-secondary">خروج</button>
+                </div>
+                <!-- Class filter dropdown -->
+                <div class="form-group">
+                    <label for="class-filter">فیلتر بر اساس کلاس:</label>
+                    <select id="class-filter">
+                        <option value="all">همه کلاس‌ها</option>
+                        <!-- Classes will be dynamically loaded here -->
+                    </select>
+                </div>
+                <div class="users-list">
+                    <ul id="users-container">
+                        <li class="loading-users">در حال بارگذاری کاربران...</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="task-section">
+                <div class="toolbar">
+                    <button class="btn btn-primary" id="open-task-modal-btn"><i class="fas fa-plus"></i> افزودن تسک</button>
+                    <button class="btn btn-primary" id="generate-report-btn"><i class="fas fa-chart-line"></i> گزارش کار</button>
+                </div>
+                
+                <div class="tasks-container">
+                    <!-- Tasks will be dynamically inserted here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL FOR ADDING/EDITING TASKS -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <h2>تسک جدید</h2>
+            <div class="form-group">
+                <label>عنوان</label>
+                <input type="text" id="task-title" class="task-input" placeholder="عنوان تسک را وارد کنید...">
+            </div>
+            <!-- Class selection for the task -->
+            <div class="form-group">
+                <label for="task-class-select">تخصیص به کلاس (اختیاری)</label>
+                <select id="task-class-select">
+                    <option value="">فقط برای دانش آموز انتخاب شده</option>
+                    <!-- Classes will be loaded here -->
+                </select>
+                <small>اگر کلاسی را انتخاب کنید، این تسک برای تمام دانش‌آموزان آن کلاس ایجاد می‌شود.</small>
+            </div>
+            <div class="form-group">
+                <label>تاریخ</label>
+                <input type="text" id="task-date" class="date-input" placeholder="انتخاب تاریخ...">
+            </div>
+            <div class="form-group time-pickers">
+                <div class="time-picker-start">
+                    <label>زمان شروع</label>
+                    <input type="time" id="time-start" class="time-input">
+                </div>
+                <div class="time-picker-end">
+                    <label>زمان پایان</label>
+                    <input type="time" id="time-end" class="time-input">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>دسته بندی</label>
+                <div class="category-buttons">
+                    <button class="category-btn score-1 active" data-score="1">عادی</button>
+                    <button class="category-btn score-2" data-score="2">مهم</button>
+                    <button class="category-btn score-3" data-score="3">فوری</button>
+                </div>
+            </div>
+            <button class="submit-task-btn btn btn-primary">افزودن تسک</button>
+        </div>
+    </div>
+    
+    <!-- MODAL FOR STUDENT WORK REPORT -->
+    <div id="reportModal" class="modal">
+        <div class="modal-content large">
+            <h2>تهیه گزارش عملکرد</h2>
+            <form id="report-form">
+                <div class="form-group report-controls">
+                    <label for="report-days">گزارش برای</label>
+                    <input type="number" id="report-days" value="7" min="1" max="90">
+                    <label for="report-days">روز گذشته</label>
+                    <button type="submit" class="btn btn-primary">ایجاد گزارش</button>
+                </div>
+            </form>
+            <div class="report-output">
+                <pre id="report-content"></pre>
+            </div>
+            <div class="modal-actions">
+                <button id="closeReportModalBtn" class="btn btn-secondary">بستن</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL FOR TASK COMPLETION REPORT -->
+    <div id="task-report-modal" class="modal">
+        <div class="modal-content large">
+            <h2 id="task-report-title">گزارش انجام تکلیف</h2>
+            <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+                <table id="task-completion-table">
+                    <thead>
+                        <tr>
+                            <th>نام دانش‌آموز</th>
+                            <th>وضعیت</th>
+                            <th>تاریخ تکمیل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Student rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+                <p id="task-report-loading">در حال بارگذاری گزارش...</p>
+            </div>
+            <div class="modal-actions">
+                <button id="close-task-report-modal-btn" class="btn btn-secondary">بستن</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fa.js"></script> 
+    <script src="app.js"></script>
+</body>
+</html>
+

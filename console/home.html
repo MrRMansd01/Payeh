@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد - کنسول پایه</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FullCalendar (with Jalali + Persian locale) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css">
+    <style>
+        .subscription-info {
+            font-size: 0.9rem;
+            background-color: #e0f2f1;
+            color: #00796b;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar-shell">
+            <div class="sidebar-header">
+                <img src="logo.svg" alt="لوگو" class="sidebar-logo">
+                <div class="sidebar-title-block">
+                    <span class="sidebar-title">کنسول پایه</span>
+                    <span class="sidebar-subtitle">پنل مدیریت مدرسه</span>
+                </div>
+            </div>
+            <div class="sidebar-user">
+                <div class="sidebar-avatar" id="sidebar-avatar-initial">پ</div>
+                <div class="sidebar-user-meta">
+                    <span class="sidebar-user-name" id="sidebar-user-name">...</span>
+                    <span class="sidebar-user-role" id="sidebar-user-role">—</span>
+                </div>
+            </div>
+            <div class="sidebar-nav-groups">
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">اصلی</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="home.html">
+                                <i class="fa-solid fa-gauge"></i>
+                                <span>داشبورد</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">آموزش</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="my-exams.html">
+                                <i class="fa-solid fa-file-lines"></i>
+                                <span>آزمون‌های من</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="tasks.html">
+                                <i class="fa-solid fa-list-check"></i>
+                                <span>تکالیف / وظایف</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="online-classes.html">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <span>برنامه هفتگی / کلاس‌های آنلاین</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="classes.html">
+                                <i class="fa-solid fa-chalkboard-teacher"></i>
+                                <span>کلاس‌ها</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">آزمون‌ها</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="create-exam.html">
+                                <i class="fa-solid fa-file-pen"></i>
+                                <span>طراحی آزمون</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="exams.html">
+                                <i class="fa-solid fa-folder-open"></i>
+                                <span>مدیریت آزمون‌ها</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="student,admin,super_admin">
+                            <a class="sidebar-link" href="take-exam.html">
+                                <i class="fa-solid fa-pencil"></i>
+                                <span>شرکت در آزمون</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">گزارش‌ها</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="report-card.html">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                                <span>نتایج و کارنامه</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="scores.html">
+                                <i class="fa-solid fa-chart-line"></i>
+                                <span>نمرات دانش‌آموزان</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="reports.html">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <span>گزارش‌ها و حضور و غیاب</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">مدیریت</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="admin,super_admin">
+                            <a class="sidebar-link" href="users.html">
+                                <i class="fa-solid fa-users"></i>
+                                <span>مدیریت کاربران</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="super_admin">
+                            <a class="sidebar-link" href="schools.html">
+                                <i class="fa-solid fa-school"></i>
+                                <span>مدیریت مدارس</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="super_admin">
+                            <a class="sidebar-link" href="subscriptions.html">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <span>اشتراک‌ها</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="subjects.html">
+                                <i class="fa-solid fa-book"></i>
+                                <span>مدیریت درس‌ها</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">حساب کاربری</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="profile.html">
+                                <i class="fa-solid fa-user-circle"></i>
+                                <span>پروفایل من</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <span>© کنسول پایه</span>
+                <button id="sidebar-logout" class="sidebar-logout-btn">خروج</button>
+            </div>
+        </aside>
+
+        <main class="page-shell">
+            <div class="page-shell-inner">
+                <header class="main-header">
+                    <h1 id="page-title" class="page-title">داشبورد</h1>
+                    <span id="subscription-display" class="subscription-info" style="display:none;"></span>
+                </header>
+
+                <section id="page-dashboard">
+                <!-- Dashboard / Home -->
+                <section id="page-dashboard" class="page page-active" aria-labelledby="page-title">
+                    <div class="stats-row" id="stats-row">
+                        <div class="stat-card">
+                            <div class="stat-label">کل وظایف</div>
+                            <div class="stat-value" id="stat-total-tasks">۰</div>
+                            <div class="stat-meta">
+                                <i class="fa-solid fa-list-check"></i>
+                                <span>در همه پروژه‌ها</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">آزمون‌های در پیش</div>
+                            <div class="stat-value" id="stat-pending-exams">۰</div>
+                            <div class="stat-meta">
+                                <i class="fa-solid fa-file-pen"></i>
+                                <span>در ۷ روز آینده</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">میانگین نمره</div>
+                            <div class="stat-value" id="stat-average-score">—</div>
+                            <div class="stat-meta">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                                <span>آخرین کارنامه</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">روزهای باقی‌مانده اشتراک</div>
+                            <div class="stat-value" id="stat-subscription-days">—</div>
+                            <div class="stat-meta">
+                                <i class="fa-solid fa-id-card-clip"></i>
+                                <span>وضعیت مدرسه</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Next 48 hours timeline -->
+                        <section class="panel timeline-panel" aria-label="رویدادهای ۴۸ ساعت آینده">
+                            <header class="panel-header">
+                                <h2>۴۸ ساعت آینده</h2>
+                            </header>
+                            <div id="next-48h-list" class="timeline-list">
+                                <div class="empty-state">در حال بارگذاری...</div>
+                            </div>
+                        </section>
+
+                        <!-- Jalali calendar -->
+                        <section class="panel calendar-panel" aria-label="تقویم وظایف">
+                            <header class="panel-header">
+                                <h2>تقویم جلالی</h2>
+                            </header>
+                            <div id="dashboard-calendar" class="calendar-root">
+                                <div class="loading-spinner"></div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Role-based intelligent widget -->
+                    <section id="role-widget-container" class="role-widget-container" aria-label="ویجت هوشمند">
+                        <!-- Filled dynamically -->
+                    </section>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Quick add modal -->
+    <div id="quick-add-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="quick-add-title">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="quick-add-title">افزودن وظیفه / یادداشت</h2>
+                <button id="quick-add-close" class="icon-btn" aria-label="بستن">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+            <form id="quick-add-form" class="modal-form">
+                <label class="form-field">
+                    <span>عنوان</span>
+                    <input type="text" id="quick-add-title-input" required>
+                </label>
+                <label class="form-field">
+                    <span>توضیحات</span>
+                    <textarea id="quick-add-description-input" rows="3"></textarea>
+                </label>
+                <label class="form-field">
+                    <span>تاریخ و زمان سررسید</span>
+                    <input type="datetime-local" id="quick-add-due-input">
+                </label>
+                <label class="form-field">
+                    <span>نوع</span>
+                    <select id="quick-add-type-input">
+                        <option value="task">وظیفه</option>
+                        <option value="exam">آزمون</option>
+                        <option value="note">یادداشت</option>
+                    </select>
+                </label>
+                <footer class="modal-footer">
+                    <button type="button" id="quick-add-cancel" class="btn-secondary">انصراف</button>
+                    <button type="submit" class="btn-primary">ثبت</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.11/locales/fa.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/jalali@6.1.11/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="auth-check.js"></script>
+    <script src="home.js"></script>
+</body>
+</html>

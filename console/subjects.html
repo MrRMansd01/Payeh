@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت درس‌ها</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="subjects.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>مدیریت درس‌ها</h1>
+            <a href="/home.html" class="back-to-dashboard-btn">
+                <i class="fas fa-arrow-left"></i> بازگشت به داشبورد
+            </a>
+        </header>
+
+        <main class="content-main">
+            <div class="toolbar">
+                <button id="add-subject-btn" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> افزودن درس جدید
+                </button>
+            </div>
+            <div class="table-container">
+                <table id="subjects-table">
+                    <thead>
+                        <tr>
+                            <th>نام درس</th>
+                            <th>تاریخ ایجاد</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ردیف‌های جدول به صورت پویا در اینجا قرار می‌گیرند -->
+                    </tbody>
+                </table>
+                <p id="loading-message">در حال بارگذاری درس‌ها...</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for adding/editing subjects -->
+    <div id="subject-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title">افزودن درس جدید</h2>
+            <form id="subject-form">
+                <input type="hidden" id="subject-id">
+                <div class="form-group">
+                    <label for="subject-name">نام درس:</label>
+                    <input type="text" id="subject-name" required placeholder="مثال: ریاضی">
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">ذخیره</button>
+                    <button type="button" id="cancel-btn" class="btn btn-secondary">انصراف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="subjects.js"></script>
+</body>
+</html>

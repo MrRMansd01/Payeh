@@ -1,0 +1,208 @@
+:root {
+    --sidebar-bg: #0b1220;
+    --sidebar-border: rgba(148, 163, 184, 0.35);
+    --sidebar-accent: #10b981;
+    --sidebar-text: #e5e7eb;
+    --sidebar-muted: #94a3b8;
+    --page-bg: #0f172a;
+}
+
+html[dir="rtl"],
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--page-bg);
+    color: var(--sidebar-text);
+}
+
+.app-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row; /* sidebar on the left */
+    background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.18), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.2), transparent 55%),
+                var(--page-bg);
+}
+
+.sidebar-shell {
+    width: 260px;
+    background: linear-gradient(145deg, #020617, #020617);
+    border-right: 1px solid var(--sidebar-border);
+    padding: 16px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 40;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 16px;
+    background: radial-gradient(circle at top, rgba(16, 185, 129, 0.9), rgba(8, 47, 73, 0.9));
+    padding: 5px;
+}
+
+.sidebar-title-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.sidebar-subtitle {
+    font-size: 0.7rem;
+    color: var(--sidebar-muted);
+}
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    font-size: 0.78rem;
+}
+
+.sidebar-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: radial-gradient(circle at top, #22c55e, #16a34a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    font-size: 0.85rem;
+}
+
+.sidebar-user-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sidebar-user-name {
+    font-weight: 500;
+}
+
+.sidebar-user-role {
+    font-size: 0.7rem;
+    color: var(--sidebar-muted);
+}
+
+.sidebar-nav-groups {
+    margin-top: 6px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.sidebar-group-title {
+    margin: 10px 2px 4px;
+    font-size: 0.7rem;
+    color: var(--sidebar-muted);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu-item {
+    margin-bottom: 4px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 9px;
+    border-radius: 12px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: background 0.18s ease, transform 0.08s ease, color 0.18s ease;
+}
+
+.sidebar-link i {
+    font-size: 0.9rem;
+    color: var(--sidebar-accent);
+}
+
+.sidebar-link:hover {
+    background: radial-gradient(circle at right, rgba(16, 185, 129, 0.16), transparent 70%);
+    transform: translateX(-1px);
+}
+
+.sidebar-footer {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    color: var(--sidebar-muted);
+}
+
+.sidebar-logout-btn {
+    border-radius: 999px;
+    border: 1px solid rgba(248, 113, 113, 0.7);
+    background: rgba(127, 29, 29, 0.8);
+    color: #fee2e2;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    cursor: pointer;
+}
+
+.page-shell {
+    flex: 1;
+    padding: 18px 20px;
+    box-sizing: border-box;
+}
+
+.page-shell-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Mobile: sidebar off-canvas with hamburger toggle */
+@media (max-width: 960px) {
+    .app-layout {
+        position: relative;
+    }
+
+    .sidebar-shell {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        transition: transform 0.2s ease-out;
+        width: 260px;
+        border-right: 1px solid var(--sidebar-border);
+    }
+
+    .app-layout.sidebar-open .sidebar-shell {
+        transform: translateX(0);
+    }
+
+    .page-shell {
+        padding-top: 60px;
+    }
+}
+
+

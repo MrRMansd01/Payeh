@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت نمرات</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="subjects.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <link rel="stylesheet" href="scores.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>ثبت نمرات</h1>
+            <a href="/home.html" class="back-to-dashboard-btn">
+                <i class="fas fa-arrow-left"></i> بازگشت به داشبورد
+            </a>
+        </header>
+
+        <main class="content-main">
+            <form id="scores-form">
+                <!-- Area for selecting subject and exam -->
+                <div class="selection-area">
+                    <div class="form-group">
+                        <label for="subject-select">۱. ابتدا درس را انتخاب کنید:</label>
+                        <select id="subject-select" required>
+                            <option value="">انتخاب کنید...</option>
+                            <!-- Subject options will be dynamically inserted here by JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-select">۲. سپس آزمون را انتخاب کنید:</label>
+                        <select id="exam-select" required disabled>
+                            <option value="">ابتدا یک درس انتخاب کنید...</option>
+                            <!-- Exam options will be dynamically inserted here by JS -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Container for the students table -->
+                <div id="students-table-container" class="table-container" style="display: none;">
+                    <table id="students-table">
+                        <thead>
+                            <tr>
+                                <th>نام دانش‌آموز</th>
+                                <th>نام کاربری</th>
+                                <th>نمره</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Student rows will be dynamically inserted here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <p id="loading-message">لطفا یک درس و آزمون را انتخاب کنید.</p>
+
+                <!-- Form actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> ذخیره تمام نمرات
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="scores.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروفایل من</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="subjects.css"> 
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>پروفایل من</h1>
+            <div class="header-actions">
+                 <button id="edit-profile-btn" class="btn btn-secondary">
+                    <i class="fas fa-edit"></i> ویرایش
+                </button>
+                <a href="/home.html" class="back-to-dashboard-btn">
+                    <i class="fas fa-arrow-left"></i> بازگشت به داشبورد
+                </a>
+            </div>
+        </header>
+
+        <main class="content-main">
+            <form id="profile-form" style="display: none;">
+                <div class="profile-summary-grid">
+                    <div class="summary-item">
+                        <label>اسم کامل:</label>
+                        <input type="text" id="profile-fullname" class="summary-input" readonly>
+                    </div>
+                    <div class="summary-item">
+                        <label>اسم پدر:</label>
+                        <input type="text" id="profile-father-name" class="summary-input" readonly>
+                    </div>
+                    <div class="summary-item">
+                        <label>اسم مادر:</label>
+                        <input type="text" id="profile-mother-name" class="summary-input" readonly>
+                    </div>
+                    <div class="summary-item">
+                        <label>شماره پدر:</label>
+                        <input type="tel" id="profile-father-phone" class="summary-input" dir="ltr" readonly>
+                    </div>
+                    <div class="summary-item">
+                        <label>شماره مادر:</label>
+                        <input type="tel" id="profile-mother-phone" class="summary-input" dir="ltr" readonly>
+                    </div>
+                    <div class="summary-item">
+                        <label>شماره خانه:</label>
+                        <input type="tel" id="profile-home-phone" class="summary-input" dir="ltr" readonly>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="save-profile-btn" class="btn btn-primary" style="display: none;">
+                        <i class="fas fa-save"></i> ذخیره تغییرات
+                    </button>
+                </div>
+            </form>
+            <p id="loading-message">در حال بارگذاری اطلاعات...</p>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

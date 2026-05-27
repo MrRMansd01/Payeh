@@ -1,0 +1,99 @@
+/* Styles for the reports page */
+.filter-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #fafbfc;
+    box-shadow: 0 2px 6px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: flex-end;
+}
+
+.filter-section .form-group {
+    flex: 1 1 200px;
+    min-width: 200px;
+}
+
+/* Choices.js styling inside filter section برای هماهنگی با scores */
+.filter-section .choices {
+    width: 100%;
+}
+
+.filter-section .choices__inner {
+    min-height: 44px; /* مشابه فیلدهای استاندارد */
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
+    padding: 0.3rem 0.75rem;
+    font-family: 'Vazirmatn', sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+.filter-section .choices__list--single {
+    padding: 0;
+}
+
+.filter-section .choices__list--dropdown {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.filter-section .choices__input {
+    padding: 0.35rem 0.25rem;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.filter-section .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.filter-section .btn {
+    flex-shrink: 0;
+    margin-top: 0.5rem;
+}
+
+.chart-container {
+    position: relative;
+    height: 400px;
+    margin-bottom: 3rem;
+}
+
+.data-section .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.data-section h3 {
+    margin: 0;
+}
+
+.export-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Status / empty-state message under table */
+#loading-message.status-message {
+    margin-top: 1rem;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+#loading-message.status-message i {
+    color: #999;
+}

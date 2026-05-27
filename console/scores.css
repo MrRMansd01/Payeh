@@ -1,0 +1,55 @@
+/* Styles specific to the scores page */
+.selection-area {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.selection-area .form-group {
+    flex: 1;
+    min-width: 250px;
+}
+
+/* استایل دهی به Choices در صفحه ثبت نمره */
+.selection-area .choices {
+    margin-top: 0.5rem;
+}
+
+.selection-area .choices__inner {
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
+    transition: border-color 0.2s;
+}
+
+.selection-area .choices__inner:focus-within {
+    border-color: var(--primary-color);
+}
+
+#students-table input[type="number"] {
+    width: 100px;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1rem;
+    direction: ltr;
+}
+
+/* Hide the number input arrows in Chrome, Safari, Edge, Opera */
+#students-table input::-webkit-outer-spin-button,
+#students-table input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide the number input arrows in Firefox */
+#students-table input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.form-actions {
+    margin-top: 1.5rem;
+    text-align: left;
+}

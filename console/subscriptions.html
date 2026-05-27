@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت اشتراک‌ها</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="subjects.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>مدیریت اشتراک مدیران</h1>
+            <a href="/home.html" class="back-to-dashboard-btn">
+                <i class="fas fa-arrow-left"></i> بازگشت به داشبورد
+            </a>
+        </header>
+
+        <main class="content-main">
+            <form id="subscription-form">
+                <div class="form-group">
+                    <label for="admin-select">۱. ابتدا مدیر مدرسه را انتخاب کنید:</label>
+                    <select id="admin-select" required>
+                        <option value="">انتخاب کنید...</option>
+                        <!-- Admin users will be dynamically inserted here -->
+                    </select>
+                </div>
+
+                <div id="subscription-details" style="display: none;">
+                    <p>تاریخ انقضای فعلی: <strong id="current-expiry">--</strong></p>
+                    <div class="form-group">
+                        <label for="expiry-date">۲. تاریخ انقضای جدید را تعیین کنید:</label>
+                        <input type="text" id="expiry-date" required placeholder="تاریخ جدید را انتخاب کنید">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> ذخیره تاریخ انقضا
+                        </button>
+                    </div>
+                </div>
+                <p id="loading-message">لطفا یک مدیر را انتخاب کنید.</p>
+            </form>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fa.js"></script>
+    <script src="subscriptions.js"></script>
+</body>
+</html>

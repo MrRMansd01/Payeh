@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامه هفتگی و حضور و غیاب</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="online-classes.css">
+    <link rel="stylesheet" href="subjects.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- --- *** جدید: کتابخانه صدا اضافه شد *** --- -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>برنامه هفتگی کلاس‌ها</h1>
+            <div id="teacher-toolbar" style="display: none;">
+                <button id="add-session-btn" class="btn btn-primary"><i class="fas fa-plus"></i> تعریف کلاس جدید</button>
+            </div>
+            <a href="/home.html" class="back-to-dashboard-btn"><i class="fas fa-arrow-left"></i> بازگشت</a>
+        </header>
+
+        <main class="content-main">
+            <div id="calendar-view">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <h2 id="calendar-title">این هفته</h2>
+                    </div>
+                    <div class="calendar-grid" id="calendar-days-header"></div>
+                    <div class="calendar-grid" id="calendar-body"></div>
+                </div>
+            </div>
+            <p id="loading-message">در حال بارگذاری برنامه...</p>
+        </main>
+    </div>
+
+    <!-- Modal for adding/editing recurring sessions -->
+    <div id="session-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title">تعریف کلاس تکرارشونده</h2>
+            <form id="session-form">
+                <input type="hidden" id="session-id">
+                <div class="form-group"><label for="session-title">عنوان کلاس:</label><input type="text" id="session-title" required></div>
+                <div class="form-group"><label for="session-class-select">برای کدام کلاس:</label><select id="session-class-select" required></select></div>
+                <div class="form-group">
+                    <label>روزهای برگزاری:</label>
+                    <div class="day-selector">
+                        <label><input type="checkbox" name="session_days" value="saturday"><span>شنبه</span></label>
+                        <label><input type="checkbox" name="session_days" value="sunday"><span>یکشنبه</span></label>
+                        <label><input type="checkbox" name="session_days" value="monday"><span>دوشنبه</span></label>
+                        <label><input type="checkbox" name="session_days" value="tuesday"><span>سه‌شنبه</span></label>
+                        <label><input type="checkbox" name="session_days" value="wednesday"><span>چهارشنبه</span></label>
+                        <label><input type="checkbox" name="session_days" value="thursday"><span>پنجشنبه</span></label>
+                        <label><input type="checkbox" name="session_days" value="friday"><span>جمعه</span></label>
+                    </div>
+                </div>
+                <div class="form-group"><label for="session-time">ساعت برگزاری:</label><input type="time" id="session-time" required></div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">ذخیره برنامه</button>
+                    <button type="button" id="cancel-btn" class="btn btn-secondary">انصراف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Attendance Modal for Teachers -->
+    <div id="attendance-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <h2 id="attendance-modal-title">حضور و غیاب کلاس: </h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h4>لیست دانشجویان کلاس</h4>
+                    <div id="student-list-container" style="max-height: 400px; overflow-y: auto; border: 1px solid #eee; padding: 1rem; border-radius: 8px;"></div>
+                </div>
+                <div>
+                    <h4>لیست غایبین</h4>
+                    <div id="absentee-list-container" style="max-height: 400px; overflow-y: auto; border: 1px solid #eee; padding: 1rem; border-radius: 8px;"></div>
+                </div>
+            </div>
+             <div class="modal-actions" style="margin-top: 1rem;">
+                 <button id="random-check-btn" class="btn btn-primary" style="display: none;">شروع حضور و غیاب رندم</button>
+            </div>
+            <div class="modal-actions" style="margin-top: 2rem;">
+                <button type="button" id="close-attendance-btn" class="btn btn-secondary">بستن</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Presence Check Popup for Students -->
+    <div id="presence-popup" style="display: none; position: fixed; bottom: 20px; right: 20px; background-color: #ffc107; color: black; padding: 20px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 2000; text-align: center;">
+        <h4>آیا در کلاس حضور دارید؟</h4>
+        <p>برای ثبت حضور خود روی دکمه زیر کلیک کنید.</p>
+        <button id="confirm-presence-btn" class="btn btn-primary" style="background-color: #28a745; border-color: #28a745;">من اینجا هستم!</button>
+        <div id="presence-timer" style="margin-top: 10px; font-weight: bold;"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="online-classes.js"></script>
+</body>
+</html>
+

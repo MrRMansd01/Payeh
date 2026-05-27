@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گزارش کلاسی و تحلیل نمرات</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="subjects.css">
+    <link rel="stylesheet" href="reports.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>گزارش کلاسی و تحلیل نمرات</h1>
+            <a href="/home.html" class="back-to-dashboard-btn">
+                <i class="fas fa-arrow-left"></i> بازگشت به داشبورد
+            </a>
+        </header>
+
+        <main class="content-main">
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <!-- *** تغییر اصلی: این بخش اضافه شد *** -->
+                <div class="form-group">
+                    <label for="class-filter">فیلتر بر اساس کلاس:</label>
+                    <select id="class-filter">
+                        <option value="all">همه کلاس‌ها</option>
+                        <!-- Class options will be dynamically loaded here by JS -->
+                    </select>
+                </div>
+                <!-- ************************************ -->
+
+                <div class="form-group">
+                    <label for="student-filter">فیلتر بر اساس دانش‌آموز:</label>
+                    <select id="student-filter">
+                        <option value="all">همه دانش‌آموزان</option>
+                        <!-- Students will be loaded here -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="subject-filter">فیلتر بر اساس درس:</label>
+                    <select id="subject-filter">
+                        <option value="all">همه درس‌ها</option>
+                        <!-- Subjects will be loaded here -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exam-filter">فیلتر بر اساس آزمون:</label>
+                    <select id="exam-filter">
+                        <option value="all">همه آزمون‌ها</option>
+                        <!-- Exams will be loaded here -->
+                    </select>
+                </div>
+                <button id="apply-filter-btn" class="btn btn-primary">اعمال فیلتر</button>
+            </div>
+
+            <!-- Chart Section -->
+            <div class="chart-container">
+                <canvas id="scores-chart"></canvas>
+            </div>
+
+            <!-- Data Table and Export Section -->
+            <div class="data-section">
+                <div class="toolbar">
+                    <h3>خروجی اکسل</h3>
+                    <div class="export-buttons">
+                        <button id="export-all-btn" class="btn btn-secondary">خروجی کامل</button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="scores-table">
+                        <thead>
+                            <tr>
+                                <th>دانش‌آموز</th>
+                                <th>درس</th>
+                                <th>آزمون</th>
+                                <th>نمره</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Score data will be loaded here -->
+                        </tbody>
+                    </table>
+                    <p id="loading-message" class="status-message">
+                        <i class="fas fa-info-circle"></i>
+                        <span>برای مشاهده گزارش، فیلترها را تنظیم و اعمال کنید.</span>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="reports.js"></script>
+</body>
+</html>

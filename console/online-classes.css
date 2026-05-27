@@ -1,0 +1,47 @@
+/* Styles for Status Dot */
+.session-card-mini {
+    position: relative;
+    padding-right: 25px; /* ایجاد فضا برای نقطه وضعیت */
+}
+
+.status-dot {
+    height: 12px;
+    width: 12px;
+    background-color: #bbb; /* رنگ پیش‌فرض برای کلاس غیرفعال */
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    left: 8px;
+    top: 15px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+
+.status-dot.active {
+    background-color: #28a745; /* رنگ سبز برای کلاس فعال */
+}
+
+/* General Calendar Styles */
+.calendar-container { width: 100%; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; background-color: #fff; }
+.calendar-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: #f8f9fa; }
+.calendar-header h2 { margin: 0; font-size: 1.2rem; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+.day-header { text-align: center; padding: 0.8rem 0.5rem; background-color: #f1f3f5; font-weight: 500; border-left: 1px solid var(--border-color); }
+.day-header:last-child { border-left: none; }
+.day-cell { min-height: 150px; border-top: 1px solid var(--border-color); border-left: 1px solid var(--border-color); padding: 0.5rem; }
+.day-cell:nth-child(7n + 1) { border-right: none; }
+.day-cell:last-of-type { border-left: none; }
+.session-card-mini { background-color: #e6f7ff; border: 1px solid #91d5ff; border-right: 5px solid #1890ff; padding: 0.8rem; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer; }
+.session-card-mini h4 { margin: 0 0 0.25rem 0; font-size: 0.9rem; }
+.session-card-mini p { margin: 0; font-size: 0.8rem; color: #555; }
+.day-selector { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.day-selector label { display: flex; align-items: center; gap: 0.3rem; padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 20px; cursor: pointer; transition: all 0.2s; }
+.day-selector input[type="checkbox"] { display: none; }
+.day-selector input:checked + span { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+.day-selector span { padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid transparent; }
+
+/* Attendance Modal Styles */
+#student-list-container ul, #absentee-list-container ul { list-style-type: none; padding: 0; }
+#student-list-container li, #absentee-list-container li { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #eee; }
+#student-list-container .missed-count { background-color: #ffc107; color: black; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
+

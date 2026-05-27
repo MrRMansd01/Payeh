@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>در حال انتقال...</title>
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: 'Vazirmatn', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <p>در حال انتقال به صفحه اصلی...</p>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        async function checkAuthAndRedirect() {
+            try {
+                const res = await fetch('/api/supabase-config');
+                if (!res.ok) {
+                    console.error('Cannot load Supabase config for index redirect.');
+                    window.location.replace('/login.html');
+                    return;
+                }
+                const { url, anonKey } = await res.json();
+                const supabase = window.supabase.createClient(url, anonKey);
+
+                const { data: { session } } = await supabase.auth.getSession();
+
+                if (session) {
+                    window.location.replace('/home.html');
+                } else {
+                    window.location.replace('/login.html');
+                }
+            } catch (e) {
+                console.error('Supabase init error in index redirect:', e);
+                window.location.replace('/login.html');
+            }
+        }
+
+        checkAuthAndRedirect();
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شرکت در آزمون</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="subjects.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .exam-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: #f8f9fa; border-radius: 8px; margin-bottom: 2rem; }
+        .timer { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
+        .question-block { margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1.5rem; }
+        .question-text { font-size: 1.2rem; font-weight: 500; margin-bottom: 1rem; }
+        .question-image, .option-image { max-width: 100%; max-height: 200px; border-radius: 8px; margin-top: 1rem; }
+        .options { display: flex; flex-direction: column; gap: 0.8rem; }
+        .option { display: flex; align-items: center; gap: 10px; padding: 0.8rem; border-radius: 8px; border: 1px solid #ddd; cursor: pointer; }
+        .option:hover { background-color: #f8f9fa; }
+        .option input[type="radio"] { margin-left: 10px; }
+        .option label { flex-grow: 1; }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1 id="exam-title">شرکت در آزمون</h1>
+            <a href="/my-exams.html" class="back-to-dashboard-btn">
+                <i class="fas fa-arrow-left"></i> بازگشت به لیست آزمون‌ها
+            </a>
+        </header>
+
+        <main class="content-main">
+            <div id="exam-area">
+                <div class="exam-header">
+                    <h2 id="exam-name-display">نام آزمون</h2>
+                    <div id="timer" class="timer">--:--</div>
+                </div>
+                <div id="questions-container">
+                    <!-- Questions will be loaded here -->
+                </div>
+                <div class="toolbar" style="text-align: center; margin-top: 2rem;">
+                    <button id="submit-exam-btn" class="btn btn-primary" style="display: none;">
+                        <i class="fas fa-check-circle"></i> ثبت نهایی و مشاهده نتیجه
+                    </button>
+                </div>
+                 <p id="loading-message">در حال آماده‌سازی آزمون...</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="take-exam.js"></script>
+</body>
+</html>
+

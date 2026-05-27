@@ -1,0 +1,53 @@
+/* Styles for the profile page */
+#profile-form {
+    display: none; /* Hidden until data is loaded */
+}
+
+.profile-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.summary-item {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.summary-item label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.summary-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid transparent; /* Transparent border for readonly mode */
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: transparent;
+    color: var(--text-color);
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* Style for when inputs are editable */
+.summary-input.editable {
+    border-color: var(--border-color);
+    background-color: #fff;
+}
+
+.form-actions {
+    margin-top: 2rem;
+    text-align: left;
+}
+
+.page-header .header-actions {
+    display: flex;
+    gap: 1rem;
+}

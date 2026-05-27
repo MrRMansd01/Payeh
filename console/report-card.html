@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کارنامه من</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="subjects.css"> 
+    <link rel="stylesheet" href="report-card.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>کارنامه من</h1>
+            <a href="/home.html" class="back-to-dashboard-btn">
+                <i class="fas fa-arrow-left"></i> بازگشت به داشبورد
+            </a>
+        </header>
+
+        <main class="content-main">
+            <!-- Summary Cards Section -->
+            <div class="summary-section">
+                <div class="summary-card">
+                    <h4>میانگین کل نمرات</h4>
+                    <p id="avg-score">--</p>
+                </div>
+                <div class="summary-card">
+                    <h4>تعداد آزمون‌ها</h4>
+                    <p id="exam-count">--</p>
+                </div>
+                <div class="summary-card">
+                    <h4>بالاترین نمره</h4>
+                    <p id="max-score">--</p>
+                </div>
+                <div class="summary-card">
+                    <h4>پایین‌ترین نمره</h4>
+                    <p id="min-score">--</p>
+                </div>
+            </div>
+
+            <!-- Chart Section -->
+            <div class="chart-container">
+                <h3>نمودار پیشرفت نمرات</h3>
+                <canvas id="progress-chart"></canvas>
+            </div>
+
+            <!-- Scores Table Section -->
+            <div class="table-container">
+                <h3>لیست نمرات</h3>
+                <table id="scores-table">
+                    <thead>
+                        <tr>
+                            <th>درس</th>
+                            <th>آزمون</th>
+                            <th>تاریخ آزمون</th>
+                            <th>نمره کسب شده</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Score rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+                <p id="loading-message">در حال بارگذاری کارنامه...</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="report-card.js"></script>
+</body>
+</html>

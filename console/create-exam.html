@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طراحی سوالات آزمون</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="subjects.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .question-card { border: 1px solid #e0e0e0; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; background-color: #f9f9f9; }
+        .question-image, .option-image { max-width: 100%; border-radius: 8px; margin-top: 1rem; }
+        .option-group { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .option-group input[type="text"] { flex-grow: 1; }
+        .option-group .btn-secondary { flex-shrink: 0; }
+        #image-preview-container, .option-preview-container { margin-top: 1rem; }
+        #image-preview, .option-preview { max-width: 150px; border-radius: 8px; display: none; margin-left: 10px; }
+    </style>
+    </head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar-shell">
+            <div class="sidebar-header">
+                <img src="logo.svg" alt="لوگو" class="sidebar-logo">
+                <div class="sidebar-title-block">
+                    <span class="sidebar-title">کنسول پایه</span>
+                    <span class="sidebar-subtitle">پنل مدیریت مدرسه</span>
+                </div>
+            </div>
+            <div class="sidebar-user">
+                <div class="sidebar-avatar" id="sidebar-avatar-initial">پ</div>
+                <div class="sidebar-user-meta">
+                    <span class="sidebar-user-name" id="sidebar-user-name">...</span>
+                    <span class="sidebar-user-role" id="sidebar-user-role">—</span>
+                </div>
+            </div>
+            <div class="sidebar-nav-groups">
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">اصلی</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="home.html">
+                                <i class="fa-solid fa-gauge"></i>
+                                <span>داشبورد</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">آموزش</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="my-exams.html">
+                                <i class="fa-solid fa-file-lines"></i>
+                                <span>آزمون‌های من</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="tasks.html">
+                                <i class="fa-solid fa-list-check"></i>
+                                <span>تکالیف / وظایف</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="online-classes.html">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <span>برنامه هفتگی / کلاس‌های آنلاین</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="classes.html">
+                                <i class="fa-solid fa-chalkboard-teacher"></i>
+                                <span>کلاس‌ها</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">آزمون‌ها</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="create-exam.html">
+                                <i class="fa-solid fa-file-pen"></i>
+                                <span>طراحی آزمون</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="exams.html">
+                                <i class="fa-solid fa-folder-open"></i>
+                                <span>مدیریت آزمون‌ها</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="student,admin,super_admin">
+                            <a class="sidebar-link" href="take-exam.html">
+                                <i class="fa-solid fa-pencil"></i>
+                                <span>شرکت در آزمون</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">گزارش‌ها</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="report-card.html">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                                <span>نتایج و کارنامه</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="scores.html">
+                                <i class="fa-solid fa-chart-line"></i>
+                                <span>نمرات دانش‌آموزان</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="reports.html">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <span>گزارش‌ها و حضور و غیاب</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">مدیریت</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="admin,super_admin">
+                            <a class="sidebar-link" href="users.html">
+                                <i class="fa-solid fa-users"></i>
+                                <span>مدیریت کاربران</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="super_admin">
+                            <a class="sidebar-link" href="schools.html">
+                                <i class="fa-solid fa-school"></i>
+                                <span>مدیریت مدارس</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="super_admin">
+                            <a class="sidebar-link" href="subscriptions.html">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <span>اشتراک‌ها</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item" data-visible-for="teacher,admin,super_admin">
+                            <a class="sidebar-link" href="subjects.html">
+                                <i class="fa-solid fa-book"></i>
+                                <span>مدیریت درس‌ها</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">حساب کاربری</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" data-visible-for="student,teacher,admin,super_admin">
+                            <a class="sidebar-link" href="profile.html">
+                                <i class="fa-solid fa-user-circle"></i>
+                                <span>پروفایل من</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <span>© کنسول پایه</span>
+                <button id="sidebar-logout" class="sidebar-logout-btn">خروج</button>
+            </div>
+        </aside>
+
+        <main class="page-shell">
+            <div class="page-shell-inner">
+                <header class="page-header">
+                    <h1 id="exam-title-header">طراحی سوالات برای: </h1>
+                </header>
+
+                <main class="content-main">
+                    <div id="questions-list">
+                        <p id="loading-questions">در حال بارگذاری سوالات...</p>
+                    </div>
+                    <div class="toolbar">
+                        <button id="add-question-btn" class="btn btn-primary"><i class="fas fa-plus"></i> افزودن سوال جدید</button>
+                    </div>
+                </main>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for adding/editing questions -->
+    <div id="question-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title">سوال جدید</h2>
+            <form id="question-form">
+                <input type="hidden" id="question-id">
+                <div class="form-group">
+                    <label for="question-text">متن سوال:</label>
+                    <textarea id="question-text" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>عکس سوال (اختیاری):</label>
+                    <input type="file" id="question-image-upload" accept="image/*" style="display: none;">
+                    <button type="button" id="upload-image-btn" class="btn btn-secondary">انتخاب عکس</button>
+                    <div id="image-preview-container">
+                        <img id="image-preview" src="" alt="پیش‌نمایش عکس">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>گزینه‌ها:</label>
+                    <!-- Option A -->
+                    <div class="option-group">
+                        <span>الف)</span><input type="text" id="option-a-text" placeholder="متن گزینه الف" required>
+                        <input type="file" class="option-image-upload" id="option-a-image-upload" accept="image/*" style="display:none;" data-option="A">
+                        <button type="button" class="btn btn-secondary upload-option-image-btn" data-option="A">عکس</button>
+                    </div>
+                     <div class="option-preview-container" id="option-a-preview-container"></div>
+                    <!-- Option B -->
+                    <div class="option-group">
+                        <span>ب)</span><input type="text" id="option-b-text" placeholder="متن گزینه ب" required>
+                        <input type="file" class="option-image-upload" id="option-b-image-upload" accept="image/*" style="display:none;" data-option="B">
+                        <button type="button" class="btn btn-secondary upload-option-image-btn" data-option="B">عکس</button>
+                    </div>
+                     <div class="option-preview-container" id="option-b-preview-container"></div>
+                    <!-- Option C -->
+                    <div class="option-group">
+                        <span>ج)</span><input type="text" id="option-c-text" placeholder="متن گزینه ج" required>
+                        <input type="file" class="option-image-upload" id="option-c-image-upload" accept="image/*" style="display:none;" data-option="C">
+                        <button type="button" class="btn btn-secondary upload-option-image-btn" data-option="C">عکس</button>
+                    </div>
+                     <div class="option-preview-container" id="option-c-preview-container"></div>
+                    <!-- Option D -->
+                    <div class="option-group">
+                        <span>د)</span><input type="text" id="option-d-text" placeholder="متن گزینه د" required>
+                        <input type="file" class="option-image-upload" id="option-d-image-upload" accept="image/*" style="display:none;" data-option="D">
+                        <button type="button" class="btn btn-secondary upload-option-image-btn" data-option="D">عکس</button>
+                    </div>
+                    <div class="option-preview-container" id="option-d-preview-container"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="correct-option">گزینه صحیح:</label>
+                    <select id="correct-option" required>
+                        <option value="A">الف</option>
+                        <option value="B">ب</option>
+                        <option value="C">ج</option>
+                        <option value="D">د</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">ذخیره سوال</button>
+                    <button type="button" id="cancel-btn" class="btn btn-secondary">انصراف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth-check.js"></script>
+    <script src="create-exam.js"></script>
+</body>
+</html>
+
