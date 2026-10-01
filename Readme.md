@@ -1,122 +1,110 @@
-# پلتفرم یکپارچه آموزشی پایه (Payeh)
- 
-یک اکوسیستم کامل مدیریت مدرسه شامل کنسول مدیریت وب و اپلیکیشن موبایل/وب برای دانش‌آموزان و معلمان.
- 
----
- 
-## ساختار پروژه
- 
+# Payeh - Full-Stack Task Management & Chat Application
+
+Payeh is a comprehensive, full-stack web application built with **React** on the frontend and **Node.js/Express** on the backend. It provides an integrated suite of tools for personal productivity and team collaboration, allowing users to manage daily tasks, utilize a Pomodoro timer for focused work, and communicate in private chat channels.
+
+## ✨ Key Features
+
+This application combines several powerful features into a seamless user experience:
+
+-   **👤 User & Profile Management:**
+    -   Secure user registration and login handled by Supabase Auth [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/api/routes/auth.js`].
+    -   Users can view and edit their profile information, including their name, username, and avatar image [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/client/src/pages/MyAccount.jsx`].
+    -   Profile pictures are uploaded directly to Supabase Storage for secure cloud hosting [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/client/src/pages/MyAccount.jsx`].
+
+-   **📝 Task Management (To-Do):**
+    -   Full CRUD (Create, Read, Update, Delete) functionality for daily tasks [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/api/routes/tasks.js`].
+    -   An intuitive UI on the home page allows users to swipe tasks to the right to mark them as complete [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/client/src/pages/Home.jsx`].
+    -   Tasks can be categorized with a score (1-3), which contributes to the user's position on the leaderboard [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/client/src/pages/Calendar.jsx`].
+
+-   **📅 Integrated Calendar:**
+    -   A full-featured calendar displays tasks in a weekly view, giving users a clear overview of their schedule [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/client/src/pages/Calendar.jsx`].
+    -   Users can add new tasks directly to a specific date via an integrated modal form.
+
+-   **⏱️ Productivity Tools:**
+    -   **Pomodoro Timer:** A built-in timer to help users manage work and break intervals based on the Pomodoro Technique [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/client/src/pages/Room.jsx`].
+    -   **Gamified Leaderboard:** To foster motivation, a leaderboard ranks users based on total focus time and points earned from completing tasks [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/api/routes/room.js`].
+
+-   **💬 Real-time Chat:**
+    -   Users can create private chat channels and invite others to join [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/client/src/pages/ChatHome.jsx`].
+    -   Send and receive text messages and images in real-time.
+    -   Live message updates are powered by Supabase Realtime subscriptions, ensuring instant communication [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/client/src/pages/ChatRoom.jsx`].
+
+## 🛠️ Tech Stack
+
+| Category      | Technology / Library                                       |
+| :------------ | :--------------------------------------------------------- |
+| **Frontend** | React, React Router, Axios, React Swipeable, CSS           |
+| **Backend** | Node.js, Express.js, CORS                                  |
+| **Database** | Supabase (PostgreSQL)                                      |
+| **Auth** | Supabase Auth                                              |
+| **Storage** | Supabase Storage (for user avatars and chat images)        |
+| **Deployment**| Vercel (configured via `vercel.json` [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/vercel.json`]) |
+
+## 🚀 Local Setup and Installation
+
+Follow these steps to run the project locally.
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone [https://github.com/MrRMansd01/Payeh.git](https://github.com/MrRMansd01/Payeh.git)
+    cd Payeh
+    ```
+
+2.  **Install Server Dependencies:**
+    ```bash
+    cd api
+    npm install
+    ```
+
+3.  **Install Client Dependencies:**
+    ```bash
+    cd ../client
+    npm install
+    ```
+
+4.  **Configure Supabase Credentials:**
+    > **⚠️ Important:** This project contains hardcoded Supabase keys for simplicity. In a production environment, you must use environment variables to protect your credentials.
+
+    You will need to replace the placeholder keys with your own Supabase project keys in two files:
+    -   **Client-side:** Open `client/src/supabaseClient.js` and update `supabaseUrl` and `supabaseAnonKey` [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/client/src/supabaseClient.js`].
+    -   **Server-side:** Open `api/supabaseClient.js` and update `supabaseUrl` and `supabaseKey` [cite: `mrrmansd01/payeh/Payeh-a9bf7c3b159bcb55da30765e68a4de878a6aea0b/api/supabaseClient.js`].
+
+## ▶️ Running the Application
+
+To run the application, you need to start both the backend and frontend servers concurrently.
+
+1.  **Start the Server:**
+    In a terminal, navigate to the `api` directory and run:
+    ```bash
+    npm start
+    ```
+    The backend server will start on `http://localhost:3001`.
+
+2.  **Start the Client:**
+    In a separate terminal, navigate to the `client` directory and run:
+    ```bash
+    npm start
+    ```
+    The React development server will start and open the application in your browser at `http://localhost:3000`.
+
+## 📂 Project Structure
+
 ```
-payeh/
-├── index.html              # لندینگ پیج اصلی
-├── demo.html               # صفحه انتخاب نقش برای دمو
-├── package.json            # اسکریپت‌های اجرای همزمان همه سرویس‌ها
-├── console/                # کنسول مدیریت (Node.js + Vanilla JS)
-│   ├── server.js           # سرور Express
-│   ├── home.html/js        # داشبورد
-│   ├── users.html/js       # مدیریت کاربران
-│   ├── classes.html/js     # مدیریت کلاس‌ها
-│   ├── exams.html/js       # مدیریت آزمون‌ها
-│   ├── scores.html/js      # ثبت نمرات
-│   ├── reports.html/js     # گزارش‌ها
-│   ├── tasks.html/js       # مدیریت تکالیف
-│   └── ...
-└── wed app/                # اپلیکیشن دانش‌آموز/معلم
-    ├── api/                # بک‌اند Express
-    │   ├── index.js
-    │   └── routes/         # auth, tasks, room, profile, channels, messages
-    ├── client/             # فرانت‌اند React
-    │   └── src/
-    │       ├── pages/      # Home, Calendar, Room, Chat, Accent, ...
-    │       └── components/ # Footer
-    └── supabase/           # تنظیمات Supabase محلی
-```
- 
----
- 
-## پشته فناوری
- 
-| بخش | فناوری |
-|-----|--------|
-| لندینگ پیج | HTML + Tailwind CSS |
-| کنسول مدیریت | Node.js + Express + Vanilla JS |
-| اپلیکیشن کاربر | React 18 + React Router |
-| بک‌اند اپ | Node.js + Express |
-| پایگاه داده | Supabase (PostgreSQL) |
-| احراز هویت | Supabase Auth |
-| فضای ذخیره‌سازی | Supabase Storage |
-| ریل‌تایم | Supabase Realtime |
- 
----
- 
-## امکانات
- 
-### کنسول مدیریت
-- داشبورد با آمار و تقویم جلالی
-- مدیریت کاربران (دانش‌آموز، معلم، مشاور، مدیر)
-- مدیریت کلاس‌ها و دانش‌آموزان
-- طراحی و مدیریت آزمون‌های آنلاین
-- ثبت نمرات و گزارش‌گیری تحلیلی
-- مدیریت تکالیف و وظایف
-- برنامه هفتگی و کلاس‌های آنلاین با Jitsi
-- حضور و غیاب ریل‌تایم
-- مدیریت مدارس و اشتراک‌ها (سوپر ادمین)
-- سیستم نقش‌محور (student / teacher / admin / super_admin)
-### اپلیکیشن کاربر (React)
-- مدیریت تسک روزانه با کشیدن انگشت برای تکمیل
-- تقویم شمسی (جلالی) اختصاصی
-- تایمر پومودورو با لیدربورد
-- چت گروهی ریل‌تایم با قابلیت ارسال تصویر
-- پروفایل کاربری با آپلود آواتار
-- صفحه جوایز و امتیازات
----
- 
-## راه‌اندازی محلی
- 
-### پیش‌نیازها
-- Node.js نسخه ۱۸ یا بالاتر
-- npm
-- حساب Supabase (یا نصب محلی Supabase CLI)
-### ۱. کلون پروژه
-```bash
-git clone https://github.com/MrRMansd01/spooder_console.git
-cd spooder_console
-```
- 
-### ۲. ساخت فایل `.env` در ریشه پروژه
-```env
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your-anon-key
-REACT_APP_SUPABASE_URL=https://your-project.supabase.co
-REACT_APP_SUPABASE_ANON_KEY=your-anon-key
-```
- 
-### ۳. نصب وابستگی‌ها
-```bash
-# وابستگی‌های ریشه
-npm install
- 
-# وابستگی‌های کنسول
-cd console && npm install && cd ..
- 
-# وابستگی‌های بک‌اند اپ
-cd "wed app/api" && npm install && cd ../..
- 
-# وابستگی‌های فرانت‌اند اپ
-cd "wed app/client" && npm install && cd ../..
-```
- 
-### ۴. اجرای همه سرویس‌ها
-```bash
-npm start
-```
- 
-این دستور همزمان اجرا می‌کند:
-| سرویس | آدرس |
-|--------|-------|
-| لندینگ پیج | http://localhost:5173 |
-| کنسول مدیریت | http://localhost:4001 |
-| بک‌اند اپ | http://localhost:3001 |
-| اپلیکیشن React | http://localhost:3000 |
- 
----
+Payeh/
+├── api/                # Backend (Node.js/Express)
+│   ├── routes/         # API route definitions
+│   ├── supabaseClient.js # Server-side Supabase client
+│   ├── index.js          # Main server entry point
+│   └── package.json
+│
+├── client/             # Frontend (React)
+│   ├── public/         # Static assets and index.html
+│   ├── src/
+│   │   ├── components/ # Reusable components (e.g., Footer)
+│   │   ├── pages/      # Page-level components
+│   │   ├── App.jsx     # Main application component with routing
+│   │   ├── api.js      # Axios instance for API calls
+│   │   └── index.js    # React application entry point
+│   └── package.json
+│
+└── vercel.json         # Deployment configuration for Vercel

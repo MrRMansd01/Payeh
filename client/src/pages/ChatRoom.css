@@ -1,0 +1,151 @@
+/* Layout اختصاصی صفحه چت که تمام ارتفاع را پر می‌کند */
+.chat-room-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* ارتفاع کامل صفحه */
+  width: 100%;
+  background-color: #f0f2f5;
+  box-sizing: border-box;
+}
+
+.chat-room-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0; /* جلوگیری از کوچک شدن هدر */
+  gap: 12px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #555;
+  padding: 0;
+}
+
+.header-chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.chat-room-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.message-list {
+  flex-grow: 1; /* تمام فضای باقی‌مانده را اشغال می‌کند */
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message-input-area {
+  padding: 8px 12px;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.message-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.message-input {
+  flex-grow: 1;
+  border: none;
+  background-color: #f0f2f5;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-size: 1rem;
+}
+
+.message-input:focus {
+  outline: none;
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: #5f6368;
+  border-radius: 50%;
+}
+
+.send-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.message-bubble-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: 75%;
+}
+
+.message-bubble-wrapper.me {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message-bubble-wrapper.other {
+  align-self: flex-start;
+}
+
+.chat-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.sender-name {
+  font-size: 0.8rem;
+  color: #555;
+  margin-bottom: 4px;
+  margin-left: 8px;
+}
+
+.message-bubble {
+  padding: 8px 12px;
+  border-radius: 18px;
+  color: #111;
+  line-height: 1.4;
+}
+
+.message-bubble-wrapper.me .message-bubble {
+  background-color: #dcf8c6;
+  border-bottom-right-radius: 4px;
+}
+
+.message-bubble-wrapper.other .message-bubble {
+  background-color: #ffffff;
+  border-bottom-left-radius: 4px;
+}
+
+.message-image {
+  max-width: 250px;
+  border-radius: 12px;
+  display: block;
+}
